@@ -1,0 +1,34 @@
+MONOPOLY_LK
+│
+├── assets
+│   
+│
+├── docs
+│   
+│
+├── include
+│   ├── board.h
+│   ├── events.h
+│   ├── finance.h
+│   ├── game.h
+│   ├── players.h
+│   └── types.h
+│
+├── output
+│   
+│
+├── src
+│   ├── board.c
+│   ├── events.c
+│   ├── finance.c
+│   ├── game.c
+│   ├── main.c
+│   └── players.c
+│
+├── test
+│   
+│
+├── .gitignore
+├── folderstructure.txt
+├── Makefile
+└── README.md
