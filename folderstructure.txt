@@ -1,12 +1,12 @@
 MONOPOLY_LK
 │
-├── assets
+├── assets/
 │   
 │
-├── docs
+├── docs/
 │   
 │
-├── include
+├── include/
 │   ├── board.h
 │   ├── events.h
 │   ├── finance.h
@@ -14,10 +14,10 @@ MONOPOLY_LK
 │   ├── players.h
 │   └── types.h
 │
-├── output
+├── output/
 │   
 │
-├── src
+├── src/
 │   ├── board.c
 │   ├── events.c
 │   ├── finance.c
@@ -25,7 +25,7 @@ MONOPOLY_LK
 │   ├── main.c
 │   └── players.c
 │
-├── test
+├── test/
 │   
 │
 ├── .gitignore
