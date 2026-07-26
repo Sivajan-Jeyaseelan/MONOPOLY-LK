@@ -32,6 +32,50 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
 
 }
 
+void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue){
+
+    square->id = id;
+
+    strcpy(square->name,name);
+
+    square->type = RAILWAY;
+
+
+    strcpy(square->railway.name,name);
+
+
+    square->railway.purchasePrice = purchasePrice;
+
+    square->railway.mortgageValue = mortgageValue;
+
+    square->railway.ownerID = -1; //doubt
+
+    square->railway.mortgageStatus = 0;
+
+}
+
+void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue){
+
+    square->id = id;
+
+    strcpy(square->name,name);
+
+    square->type = UTILITY;
+
+
+    strcpy(square->utility.name,name);
+
+
+    square->utility.purchasePrice = purchasePrice;
+
+    square->utility.mortgageValue = mortgageValue;
+
+    square->utility.ownerID = -1;
+
+    square->utility.mortgageStatus = 0;
+
+}
+
 
 void initializeBoard(Board board[]){
 
@@ -47,7 +91,7 @@ void initializeBoard(Board board[]){
 
     createSquare(&board[4], 4, "Income Tax", TAX);
 
-    createSquare(&board[5], 5, "Colombo Fort Railway Station", RAILWAY);
+    createRailway(&board[5],5,"Colombo Fort Railway Station",2000,1000);
 
     // this square is a property
     createProperty(&board[6],6,"Bambalapitiya",2,1800,900,120,600,2200);
@@ -65,7 +109,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[11],11,"Nugegoda",3,2200,1100,160,800,2800);
 
-    createSquare(&board[12],12,"Ceylon Electricity Board",UTILITY);
+    createUtility(&board[12], 12, "Ceylon Electricity Board", 3000, 1500);
 
     // this square is a property
     createProperty(&board[13],13,"Maharagama",3,2200,1100,160,800,2800);
@@ -73,7 +117,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[14],14,"Kottawa",3,2500,1250,180,900,3000);
 
-    createSquare(&board[15],15,"Kandy Railway Station",RAILWAY);
+    createRailway(&board[15], 15, "Kandy Railway Station", 2000, 1000);
 
     // this square is a property
     createProperty(&board[16],16,"Negombo",4,2600,1300,200,1000,3200);
@@ -99,7 +143,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[24],24,"Katugastota",5,3200,1600,280,1300,4200);
 
-    createSquare(&board[25],25,"Galle Railway Station",RAILWAY);
+    createRailway(&board[25], 25, "Galle Railway Station", 2000, 1000);
 
     // this square is a property
     createProperty(&board[26],26,"Galle Fort",6,3500,1750,300,1500,4500);
@@ -107,7 +151,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[27],27,"Unawatuna",6,3500,1750,300,1500,4500);
 
-    createSquare(&board[28],28,"National Water Supply and Drainage Board",UTILITY);
+    createUtility(&board[28], 28, "National Water Supply and Drainage Board", 3000, 1500);
 
     // this square is a property
     createProperty(&board[29],29,"Hikkaduwa",6,3800,1900,350,1700,5000);
@@ -125,7 +169,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[34],34,"Trincomalee",7,4300,2150,450,2200,6000);
 
-    createSquare(&board[35],35,"Jaffna Railway Station",RAILWAY);
+    createRailway(&board[35], 35, "Jaffna Railway Station", 2000, 1000);
 
     createSquare(&board[36],36,"National Event Card",EVENT);
 
@@ -145,6 +189,57 @@ void displayBoard(Board board[]){
     for(int i = 0; i < 40; i++)    {
 
         printf("Square %d : %s\n", board[i].id, board[i].name);
+
+        if(board[i].type == PROPERTY){
+
+            printf("Type : Property\n");
+            printf("Purchase Price : LKR %d\n", board[i].property.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].property.mortgageValue);
+            printf("Owner ID : %d\n\n", board[i].property.ownerID);
+
+        }else if(board[i].type == RAILWAY){
+
+            printf("Type : Railway Station\n");
+            printf("Purchase Price : LKR %d\n", board[i].railway.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].railway.mortgageValue);
+            printf("Owner ID : %d\n", board[i].railway.ownerID);
+            printf("Mortgage Status : %d\n\n", board[i].railway.mortgageStatus);
+
+        }else if(board[i].type == UTILITY){
+
+            printf("Type : Utility\n");            
+            printf("Purchase Price : LKR %d\n", board[i].utility.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].utility.mortgageValue);
+            printf("Owner ID : %d\n", board[i].utility.ownerID);
+            printf("Mortgage Status : %d\n\n", board[i].utility.mortgageStatus);
+
+        }else if(board[i].type == START){
+
+            printf("Type : Start\n\n");
+
+        }
+
+        else if(board[i].type == EVENT){
+
+            printf("Type : Event\n\n");
+
+        }else if(board[i].type == TAX){
+
+            printf("Type : Tax\n\n");
+
+        }else if(board[i].type == INSURANCE){
+
+            printf("Type : Insurance\n\n");
+
+        }else if(board[i].type == BANK){
+
+            printf("Type : Bank\n\n");
+
+        }else if(board[i].type == SPECIAL){
+        
+            printf("Type : Special\n\n");
+
+        }
 
     }
 

@@ -18,6 +18,8 @@ typedef enum{
 }SquareType;
 
 
+
+
 // Property Structure
 typedef struct{
 
@@ -37,17 +39,57 @@ typedef struct{
 
 
 
+
+// Railway Structure
+typedef struct{
+
+    char name[50];
+    int purchasePrice;
+    int mortgageValue;
+    int ownerID;
+    int mortgageStatus;
+
+}Railway;
+
+
+// Utility Structure
+typedef struct{
+
+    char name[50];
+    int purchasePrice;
+    int mortgageValue;
+    int ownerID;
+    int mortgageStatus;
+
+}Utility;
+
+
+
 // Board Structure
 typedef struct{
 
     int id;
     char name[50];
     SquareType type;
+
     Property property;
+    Railway railway;
+    Utility utility;
 
 }Board;
 
 
+
+// Loan Structure
+typedef struct{
+
+    int active;
+    int loanAmount;
+    int interest;
+    int collateralValue;
+    int maturity;
+
+}Loan;
 
 
 // Player Structure
@@ -60,7 +102,12 @@ typedef struct{
     int bankrupt;
     int propertyCount;
 
-}Player;    
+    Loan loan;
+
+}Player;   
+
+
+
 
 
 
