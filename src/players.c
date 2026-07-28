@@ -10,7 +10,7 @@ void createPlayer(Player *player, int id, char name[]){
 
     strcpy(player->name, name);
 
-    player->money = 10000;
+    player->money = 30000;
 
     player->position = 0;
 
