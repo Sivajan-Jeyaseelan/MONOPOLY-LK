@@ -5,6 +5,7 @@
 
 
 int calculatePremium(Board *property, InsuranceType type);
+int calculateLostRentalIncome(Board *property);
 int calculateCompensation(Board *property, int repairCost);
 void purchaseInsurance(Player *player, Board board[]);
 void renewInsurance(Player *player, Board *property);

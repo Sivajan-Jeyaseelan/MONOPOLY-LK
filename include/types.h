@@ -2,6 +2,11 @@
 #define TYPES_H
 
 
+#define NO_BUILDING 0
+#define HOUSE 1
+#define HOTEL 2
+
+
 //Board Square categories
 typedef enum{
 
@@ -38,6 +43,8 @@ typedef struct{
     int premium;
 
     int remainingRounds;
+
+    int lostIncomeRounds;
 
 }Insurance;
 

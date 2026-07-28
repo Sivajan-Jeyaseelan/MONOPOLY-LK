@@ -28,7 +28,7 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
     square->property.ownerID = -1;
     square->property.mortgageStatus = 0;
     square->property.insuranceStatus = 0;
-    square->property.buildings = 0;
+    square->property.buildings = NO_BUILDING;
 
 }
 

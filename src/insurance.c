@@ -28,6 +28,14 @@ int calculatePremium(Board *property, InsuranceType type){
 
 }
 
+int calculateLostRentalIncome(Board *property){
+
+    int rent = property->property.baseRent;
+
+    return rent * 5;
+
+}
+
 int calculateCompensation(Board *property, int repairCost){
 
     InsuranceType type = property->property.insurance.type;
@@ -46,7 +54,15 @@ int calculateCompensation(Board *property, int repairCost){
 
         case BUSINESS_INTERRUPTION_INSURANCE:
 
-            return repairCost;
+            if(property->property.buildings == HOTEL){
+
+                int lostIncome = calculateLostRentalIncome(property);
+
+                return repairCost + lostIncome;
+
+            }
+
+            return 0;
 
 
         default:
