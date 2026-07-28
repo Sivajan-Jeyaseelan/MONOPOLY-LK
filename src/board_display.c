@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../../include/board.h"
+#include "../include/board.h"
 
 
 void displayBoard(Board board[]){

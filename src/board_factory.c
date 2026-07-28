@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../include/board.h"
+#include "../include/board.h"
 
 
 void createSquare(Board *square, int id, char name[], SquareType type){

@@ -2,7 +2,7 @@
 #define DISASTER_H
 
 
-#include "../types.h"
+#include "types.h"
 
 int calculatePremium(Board *property, InsuranceType type);
 int calculateLostRentalIncome(Board *property);

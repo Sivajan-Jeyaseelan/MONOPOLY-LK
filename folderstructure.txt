@@ -21,22 +21,19 @@ MONOPOLY_LK
 │
 ├── src/
 │   ├── bank.c
+│   ├── board_display.c
+│   ├── board_factory.c
+│   ├── board_initializer.c
 │   ├── board.c
-│   └── board/
-│   |       ├── board_display.c
-│   |       ├── board_factory.c
-│   |       └── board_initializer.c
-│   |       └── board.c
-│   |       
+│   ├── board.c
+│   ├── disaster.c
 │   ├── events.c
 │   ├── finance.c
 │   ├── game.c
-│   └── insurance/
-│   |       ├── disaster.c
-│   |       ├── insurance_company.c
-│   |       └── insurance_policy.c
-│   |       └── insurance.c
-│   |       
+│   ├── insurance_company.c
+│   ├── insurance_policy.c
+│   ├── insurance.c
+│   ├── game.c
 │   ├── main.c
 │   └── players.c
 │

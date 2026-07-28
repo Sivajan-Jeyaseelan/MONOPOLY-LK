@@ -1,4 +1,4 @@
-#include "../../include/board.h"
+#include "../include/board.h"
 
 
 void initializeBoard(Board board[]){
