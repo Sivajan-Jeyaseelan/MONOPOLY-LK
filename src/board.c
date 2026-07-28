@@ -28,6 +28,12 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
     square->property.ownerID = -1;
     square->property.mortgageStatus = 0;
     square->property.insuranceStatus = 0;
+    square->property.insurance.lostIncomeRounds = 0;
+    square->property.insurance.type = NO_INSURANCE;
+    square->property.insurance.premium = 0;
+    square->property.insurance.remainingRounds = 0;
+    square->property.insurance.lostIncomeRounds = 0;
+    square->property.insurance.disasterActive = 0;
     square->property.buildings = NO_BUILDING;
 
 }

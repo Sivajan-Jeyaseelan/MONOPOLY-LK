@@ -72,6 +72,33 @@ int calculateCompensation(Board *property, int repairCost){
 
 }
 
+void applyDisaster(Board *property, Player *owner, int repairCost){
+
+    if(property->property.insuranceStatus == 1){
+
+        int compensation = calculateCompensation(property, repairCost);
+
+        owner->money += compensation;
+
+        if(property->property.insurance.type == BUSINESS_INTERRUPTION_INSURANCE && property->property.buildings == HOTEL){
+
+            property->property.insurance.lostIncomeRounds = 5;
+
+        }
+
+        printf("Insurance compensation received: LKR %d\n", compensation);
+
+    }else{
+
+        owner->money -= repairCost;
+
+        printf("No insurance. Owner paid repair cost: LKR %d\n",
+        repairCost);
+
+    }
+
+}
+
 void purchaseInsurance(Player *player, Board board[]){
 
     int propertyID;
@@ -160,6 +187,10 @@ void purchaseInsurance(Player *player, Board board[]){
 
     property->property.insurance.remainingRounds = 20;
 
+    property->property.insurance.lostIncomeRounds = 0;
+
+    property->property.insurance.disasterActive = 0;
+
     printf("Insurance purchased for %s\n", property->name);
 
 }
@@ -197,6 +228,16 @@ void updateInsurance(Board board[]){
 
         Board *property = &board[i];
 
+        if(property->property.insurance.lostIncomeRounds > 0){
+
+    printf("%s lost rental income compensation round\n",
+    property->name);
+
+
+    property->property.insurance.lostIncomeRounds--;
+
+}
+
         if(property->type == PROPERTY && property->property.insuranceStatus == 1){
 
             property->property.insurance.remainingRounds--;
@@ -214,6 +255,10 @@ void updateInsurance(Board board[]){
                 property->property.insurance.type = NO_INSURANCE;
 
                 property->property.insurance.premium = 0;
+
+                property->property.insurance.lostIncomeRounds = 0;
+
+                property->property.insurance.disasterActive = 0;
 
 
                 printf("%s insurance expired\n", property->name);

@@ -46,6 +46,8 @@ typedef struct{
 
     int lostIncomeRounds;
 
+    int disasterActive;
+
 }Insurance;
 
 
