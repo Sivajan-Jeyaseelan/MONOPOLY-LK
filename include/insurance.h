@@ -1,0 +1,15 @@
+#ifndef INSURANCE_H
+#define INSURANCE_H
+
+#include "types.h"
+
+
+int calculatePremium(Board *property, InsuranceType type);
+int calculateCompensation(Board *property, int repairCost);
+void purchaseInsurance(Player *player, Board board[]);
+void renewInsurance(Player *player, Board *property);
+void updateInsurance(Board board[]);
+
+
+
+#endif
