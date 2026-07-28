@@ -230,13 +230,11 @@ void updateInsurance(Board board[]){
 
         if(property->property.insurance.lostIncomeRounds > 0){
 
-    printf("%s lost rental income compensation round\n",
-    property->name);
+            printf("%s lost rental income compensation round\n", property->name);
 
+            property->property.insurance.lostIncomeRounds--;
 
-    property->property.insurance.lostIncomeRounds--;
-
-}
+        }
 
         if(property->type == PROPERTY && property->property.insuranceStatus == 1){
 
