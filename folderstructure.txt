@@ -7,10 +7,12 @@ MONOPOLY_LK
 │   
 │
 ├── include/
+│   ├── bank.h
 │   ├── board.h
 │   ├── events.h
 │   ├── finance.h
 │   ├── game.h
+│   ├── insurance.h
 │   ├── players.h
 │   └── types.h
 │
@@ -18,10 +20,12 @@ MONOPOLY_LK
 │   
 │
 ├── src/
+│   ├── bank.c
 │   ├── board.c
 │   ├── events.c
 │   ├── finance.c
 │   ├── game.c
+│   ├── insurance.c
 │   ├── main.c
 │   └── players.c
 │
@@ -31,4 +35,5 @@ MONOPOLY_LK
 ├── .gitignore
 ├── folderstructure.txt
 ├── Makefile
+├── monopoly.exe
 └── README.md
