@@ -12,7 +12,11 @@ MONOPOLY_LK
 │   ├── events.h
 │   ├── finance.h
 │   ├── game.h
-│   ├── insurance.h
+│   └── insurance/
+│   |       ├── disaster.h
+│   |       ├── insurance_company.h
+│   |       └── insurance_policy.h
+│   |       
 │   ├── players.h
 │   └── types.h
 │
@@ -25,7 +29,11 @@ MONOPOLY_LK
 │   ├── events.c
 │   ├── finance.c
 │   ├── game.c
-│   ├── insurance.c
+│   └── insurance/
+│   |       ├── disaster.c
+│   |       ├── insurance_company.c
+│   |       └── insurance_policy.c
+│   |       
 │   ├── main.c
 │   └── players.c
 │
