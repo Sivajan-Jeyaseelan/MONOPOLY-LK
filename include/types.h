@@ -18,6 +18,28 @@ typedef enum{
 }SquareType;
 
 
+// Insurance Types
+typedef enum{
+
+    NO_INSURANCE,
+    BASIC_INSURANCE,
+    COMPREHENSIVE_INSURANCE,
+    BUSINESS_INTERRUPTION_INSURANCE
+
+}InsuranceType; 
+
+
+
+// Insurance Structure
+typedef struct{
+
+    InsuranceType type;
+
+    int premium;
+
+    int remainingRounds;
+
+}Insurance;
 
 
 // Property Structure
@@ -32,8 +54,12 @@ typedef struct{
     int hotelCost;
     int ownerID;
     int mortgageStatus;
-    int insuranceStatus;
     int buildings;
+
+    int insuranceStatus;
+    Insurance insurance;
+
+    
 
 }Property;
 
@@ -90,6 +116,7 @@ typedef struct{
     int maturity;
 
 }Loan;
+
 
 
 // Player Structure
