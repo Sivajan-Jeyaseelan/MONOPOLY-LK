@@ -1,6 +1,10 @@
-types.h
 #ifndef TYPES_H
 #define TYPES_H
+
+
+#define NO_BUILDING 0
+#define HOUSE 1
+#define HOTEL 2
 
 
 //Board Square categories
@@ -39,6 +43,8 @@ typedef struct{
     int premium;
 
     int remainingRounds;
+
+    int lostIncomeRounds;
 
 }Insurance;
 
@@ -159,6 +165,7 @@ insurance.h
 
 
 int calculatePremium(Board *property, InsuranceType type);
+int calculateLostRentalIncome(Board *property);
 int calculateCompensation(Board *property, int repairCost);
 void purchaseInsurance(Player *player, Board board[]);
 void renewInsurance(Player *player, Board *property);
@@ -288,6 +295,14 @@ int calculatePremium(Board *property, InsuranceType type){
 
 }
 
+int calculateLostRentalIncome(Board *property){
+
+    int rent = property->property.baseRent;
+
+    return rent * 5;
+
+}
+
 int calculateCompensation(Board *property, int repairCost){
 
     InsuranceType type = property->property.insurance.type;
@@ -306,7 +321,15 @@ int calculateCompensation(Board *property, int repairCost){
 
         case BUSINESS_INTERRUPTION_INSURANCE:
 
-            return repairCost;
+            if(property->property.buildings == HOTEL){
+
+                int lostIncome = calculateLostRentalIncome(property);
+
+                return repairCost + lostIncome;
+
+            }
+
+            return 0;
 
 
         default:
@@ -543,7 +566,6 @@ int calculateUtilityRent(Board board[], int ownerID, int diceValue){
 
 }
 
-board.c 
 #include<stdio.h>
 #include <string.h>
 
@@ -574,7 +596,7 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
     square->property.ownerID = -1;
     square->property.mortgageStatus = 0;
     square->property.insuranceStatus = 0;
-    square->property.buildings = 0;
+    square->property.buildings = NO_BUILDING;
 
 }
 
