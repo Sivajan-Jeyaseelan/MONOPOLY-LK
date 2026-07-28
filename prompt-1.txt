@@ -1,0 +1,244 @@
+types.h
+#ifndef TYPES_H
+#define TYPES_H
+
+
+#define NO_BUILDING 0
+#define HOUSE 1
+#define HOTEL 2
+
+
+//Board Square categories
+typedef enum{
+
+    START,
+    PROPERTY,
+    EVENT,
+    TAX,
+    RAILWAY,
+    UTILITY,
+    SPECIAL,
+    INSURANCE,
+    BANK
+
+}SquareType;
+
+
+// Insurance Types
+typedef enum{
+
+    NO_INSURANCE,
+    BASIC_INSURANCE,
+    COMPREHENSIVE_INSURANCE,
+    BUSINESS_INTERRUPTION_INSURANCE
+
+}InsuranceType; 
+
+
+
+// Insurance Structure
+typedef struct{
+
+    InsuranceType type;
+
+    int premium;
+
+    int remainingRounds;
+
+    int lostIncomeRounds;
+
+    int disasterActive;
+
+}Insurance;
+
+
+// Property Structure
+typedef struct{
+
+    char name[50];
+    int groupID;
+    int purchasePrice;
+    int mortgageValue;
+    int baseRent;
+    int houseCost;
+    int hotelCost;
+    int ownerID;
+    int mortgageStatus;
+    int buildings;
+
+    int insuranceStatus;
+    Insurance insurance;
+
+    
+
+}Property;
+
+
+
+
+// Railway Structure
+typedef struct{
+
+    char name[50];
+    int purchasePrice;
+    int mortgageValue;
+    int ownerID;
+    int mortgageStatus;
+
+}Railway;
+
+
+// Utility Structure
+typedef struct{
+
+    char name[50];
+    int purchasePrice;
+    int mortgageValue;
+    int ownerID;
+    int mortgageStatus;
+
+}Utility;
+
+
+
+// Board Structure
+typedef struct{
+
+    int id;
+    char name[50];
+    SquareType type;
+
+    Property property;
+    Railway railway;
+    Utility utility;
+
+}Board;
+
+
+
+// Loan Structure
+typedef struct{
+
+    int active;
+    int loanAmount;
+    int interest;
+    int collateralValue;
+    int maturity;
+
+}Loan;
+
+
+
+// Player Structure
+typedef struct{
+
+    int id;
+    char name[50];
+    int money;
+    int position;
+    int bankrupt;
+    int propertyCount;
+
+    Loan loan;
+
+}Player;   
+
+
+
+
+
+
+#endif
+
+
+
+finance.h
+#ifndef FINANCE_H
+#define FINANCE_H
+
+#include "types.h"
+
+
+int calculateRailwayRent(Board board[], int playerID);
+int calculateUtilityRent(Board board[], int ownerID, int diceValue);
+
+
+#endif
+
+
+
+board.h
+#ifndef BOARD_H
+#define BOARD_H
+
+#include "types.h"
+
+void createSquare(Board *square, int id, char name[], SquareType type);
+void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel);
+void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
+void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
+
+void initializeBoard(Board board[]);
+
+void displayBoard(Board board[]);
+
+#endif
+
+
+
+
+bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+#ifndef BANK_H
+#define BANK_H
+
+#include "types.h"
+
+int calculateMaxLoan(Player player, Board board[]);
+void obtainLoan(Player *player, Board board[]);
+void repayLoan(Player *player, int amount);
+void applyLoanInterest(Player players[], int playerCount);
+void foreclosure(Player *player, Board board[]);
+void bankTransaction(Player *player, Board board[]);
+void refinanceLoan(Player *player, Board board[]);
+void increaseLoan(Player *player, Board board[]);
+void repayFullLoan(Player *player);
+void checkLoanMaturity(Player players[], int playerCount, Board board[]);
+
+
+
+#endif
+
+
+
+insurance.h
+#ifndef DISASTER_H
+#define DISASTER_H
+
+
+#include "types.h"
+
+int calculatePremium(Board *property, InsuranceType type);
+int calculateLostRentalIncome(Board *property);
+int calculateCompensation(Board *property, int repairCost);
+
+void purchaseInsurance(Player *player, Board board[]);
+void renewInsurance(Player *player, Board *property);
+void updateInsurance(Board board[]);
+
+void applyDisaster(Board *property, Player *owner, int repairCost);
+
+
+#endif
+
+
+
+
+players.h
+#ifndef PLAYERS_H
+#define PLAYERS_H
+
+#include "types.h"
+
+void createPlayer(Player *player, int id, char name[]);
+
+#endif

@@ -1,0 +1,1051 @@
+finance.c
+#include "../include/finance.h"
+
+
+int calculateRailwayRent(Board board[], int playerID){
+
+    int railwayCount = 0;
+
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == RAILWAY && board[i].railway.ownerID == playerID){
+
+            railwayCount++;
+
+        }
+
+    }
+
+
+    if(railwayCount == 1){
+
+        return 250;
+
+    }else if(railwayCount == 2){
+
+        return 500;
+
+    }else if(railwayCount == 3){
+
+        return 1000;
+
+    }else if(railwayCount == 4){
+
+        return 2000;
+
+    }
+
+
+    return 0;
+
+}
+
+
+int calculateUtilityRent(Board board[], int ownerID, int diceValue){
+
+    int utilityCount = 0;
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == UTILITY && board[i].utility.ownerID == ownerID){
+
+            utilityCount++;
+
+        }
+
+    }
+
+    if(utilityCount == 1){
+
+        return 4 * diceValue;
+
+    }
+    else if(utilityCount == 2){
+
+        return 10 * diceValue;
+
+    }
+
+    return 0;
+
+}
+
+
+
+
+board_display.c
+#include <stdio.h>
+
+#include "../include/board.h"
+
+
+void displayBoard(Board board[]){
+
+    for(int i = 0; i < 40; i++)    {
+
+        printf("Square %d : %s\n", board[i].id, board[i].name);
+
+        if(board[i].type == PROPERTY){
+
+            printf("Type : Property\n");
+            printf("Purchase Price : LKR %d\n", board[i].property.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].property.mortgageValue);
+            printf("Owner ID : %d\n\n", board[i].property.ownerID);
+
+        }else if(board[i].type == RAILWAY){
+
+            printf("Type : Railway Station\n");
+            printf("Purchase Price : LKR %d\n", board[i].railway.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].railway.mortgageValue);
+            printf("Owner ID : %d\n", board[i].railway.ownerID);
+            printf("Mortgage Status : %d\n\n", board[i].railway.mortgageStatus);
+
+        }else if(board[i].type == UTILITY){
+
+            printf("Type : Utility\n");            
+            printf("Purchase Price : LKR %d\n", board[i].utility.purchasePrice);
+            printf("Mortgage Value : LKR %d\n", board[i].utility.mortgageValue);
+            printf("Owner ID : %d\n", board[i].utility.ownerID);
+            printf("Mortgage Status : %d\n\n", board[i].utility.mortgageStatus);
+
+        }else if(board[i].type == START){
+
+            printf("Type : Start\n\n");
+
+        }
+
+        else if(board[i].type == EVENT){
+
+            printf("Type : Event\n\n");
+
+        }else if(board[i].type == TAX){
+
+            printf("Type : Tax\n\n");
+
+        }else if(board[i].type == INSURANCE){
+
+            printf("Type : Insurance\n\n");
+
+        }else if(board[i].type == BANK){
+
+            printf("Type : Bank\n\n");
+
+        }else if(board[i].type == SPECIAL){
+        
+            printf("Type : Special\n\n");
+
+        }
+
+    }
+
+}
+
+
+
+
+
+board_factory.c
+#include <stdio.h>
+#include <string.h>
+
+#include "../include/board.h"
+
+
+void createSquare(Board *square, int id, char name[], SquareType type){
+
+    square->id = id;
+    strcpy(square->name,name);
+    square->type = type;
+
+}
+
+
+void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel){
+
+    square->id = id;
+    strcpy(square->name,name);
+    square->type = PROPERTY;
+    square->property.groupID = group;
+    square->property.purchasePrice = price;
+    square->property.mortgageValue = mortgage;
+    square->property.baseRent = rent;
+    square->property.houseCost = house;
+    square->property.hotelCost = hotel;
+    square->property.ownerID = -1;
+    square->property.mortgageStatus = 0;
+    square->property.insuranceStatus = 0;
+    square->property.insurance.lostIncomeRounds = 0;
+    square->property.insurance.type = NO_INSURANCE;
+    square->property.insurance.premium = 0;
+    square->property.insurance.remainingRounds = 0;
+    square->property.insurance.lostIncomeRounds = 0;
+    square->property.insurance.disasterActive = 0;
+    square->property.buildings = NO_BUILDING;
+
+}
+
+void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue){
+
+    square->id = id;
+
+    strcpy(square->name,name);
+
+    square->type = RAILWAY;
+
+
+    strcpy(square->railway.name,name);
+
+
+    square->railway.purchasePrice = purchasePrice;
+
+    square->railway.mortgageValue = mortgageValue;
+
+    square->railway.ownerID = -1; //doubt
+
+    square->railway.mortgageStatus = 0;
+
+}
+
+void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue){
+
+    square->id = id;
+
+    strcpy(square->name,name);
+
+    square->type = UTILITY;
+
+
+    strcpy(square->utility.name,name);
+
+
+    square->utility.purchasePrice = purchasePrice;
+
+    square->utility.mortgageValue = mortgageValue;
+
+    square->utility.ownerID = -1;
+
+    square->utility.mortgageStatus = 0;
+
+}
+
+
+
+
+
+board_initializer.c
+#include "../include/board.h"
+
+
+void initializeBoard(Board board[]){
+
+    createSquare(&board[0], 0, "GO", START);
+
+    // this square is a property
+    createProperty(&board[1],1,"Pettah",1,1500,750,100,500,2000);
+
+    createSquare(&board[2], 2, "Community Development Fund", EVENT);
+
+    // this square is a property
+    createProperty(&board[3],3,"Maradana",1,1500,750,100,500,2000);
+
+    createSquare(&board[4], 4, "Income Tax", TAX);
+
+    createRailway(&board[5],5,"Colombo Fort Railway Station",2000,1000);
+
+    // this square is a property
+    createProperty(&board[6],6,"Bambalapitiya",2,1800,900,120,600,2200);
+
+    createSquare(&board[7],7,"National Event Card",EVENT);
+
+    // this square is a property
+    createProperty(&board[8],8,"Wellawatte",2,1800,900,120,600,2200);
+
+    // this square is a property
+    createProperty(&board[9],9,"Mount Lavinia",2,2000,1000,150,700,2500);
+
+    createSquare(&board[10],10,"Jail / Just Visiting",SPECIAL);
+
+    // this square is a property
+    createProperty(&board[11],11,"Nugegoda",3,2200,1100,160,800,2800);
+
+    createUtility(&board[12], 12, "Ceylon Electricity Board", 3000, 1500);
+
+    // this square is a property
+    createProperty(&board[13],13,"Maharagama",3,2200,1100,160,800,2800);
+
+    // this square is a property
+    createProperty(&board[14],14,"Kottawa",3,2500,1250,180,900,3000);
+
+    createRailway(&board[15], 15, "Kandy Railway Station", 2000, 1000);
+
+    // this square is a property
+    createProperty(&board[16],16,"Negombo",4,2600,1300,200,1000,3200);
+
+    createSquare(&board[17],17,"Sri Lanka Insurance",INSURANCE);
+
+    // this square is a property
+    createProperty(&board[18],18,"Katunayake",4,2600,1300,200,1000,3200);
+
+    // this square is a property
+    createProperty(&board[19],19,"Ja-Ela",4,2800,1400,220,1100,3500);
+
+    createSquare(&board[20],20,"Free Parking",SPECIAL);
+
+    // this square is a property
+    createProperty(&board[21],21,"Kandy City",5,3000,1500,250,1200,4000);
+
+    createSquare(&board[22],22,"National Event Card",EVENT);
+
+    // this square is a property
+    createProperty(&board[23],23,"Peradeniya",5,3000,1500,250,1200,4000);
+
+    // this square is a property
+    createProperty(&board[24],24,"Katugastota",5,3200,1600,280,1300,4200);
+
+    createRailway(&board[25], 25, "Galle Railway Station", 2000, 1000);
+
+    // this square is a property
+    createProperty(&board[26],26,"Galle Fort",6,3500,1750,300,1500,4500);
+
+    // this square is a property
+    createProperty(&board[27],27,"Unawatuna",6,3500,1750,300,1500,4500);
+
+    createUtility(&board[28], 28, "National Water Supply and Drainage Board", 3000, 1500);
+
+    // this square is a property
+    createProperty(&board[29],29,"Hikkaduwa",6,3800,1900,350,1700,5000);
+
+    createSquare(&board[30],30,"Go To Jail",SPECIAL);
+
+    // this square is a property
+    createProperty(&board[31],31,"Jaffna Town",7,4000,2000,400,2000,5500);
+
+    // this square is a property
+    createProperty(&board[32],32,"Nallur",7,4000,2000,400,2000,5500);
+
+    createSquare(&board[33],33,"Ceylinco Insurance",INSURANCE);
+
+    // this square is a property
+    createProperty(&board[34],34,"Trincomalee",7,4300,2150,450,2200,6000);
+
+    createRailway(&board[35], 35, "Jaffna Railway Station", 2000, 1000);
+
+    createSquare(&board[36],36,"National Event Card",EVENT);
+
+    // this square is a property
+    createProperty(&board[37],37,"Nuwara Eliya",8,5000,2500,500,2500,7000);
+
+    createSquare(&board[38],38,"Bank of Ceylon",BANK);
+
+    // this square is a property
+    createProperty(&board[39],39,"Galle Face",8,5500,2750,600,3000,8000);
+
+}
+
+
+
+board.c
+#include "../include/board.h"
+
+
+void setupBoard(Board board[]){
+
+    initializeBoard(board);
+
+}
+
+
+void showBoard(Board board[]){
+
+    displayBoard(board);
+
+}
+
+
+
+
+bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+#include <stdio.h>
+
+#include "../include/bank.h"
+
+int calculateMaxLoan(Player player, Board board[]){
+
+    int totalMortgageValue = 0;
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY){
+
+            if(board[i].property.ownerID == player.id && board[i].property.mortgageStatus == 0){
+
+                totalMortgageValue += board[i].property.mortgageValue;
+
+            }
+
+        }
+
+    }
+
+    return totalMortgageValue * 0.75;
+
+}
+
+void obtainLoan(Player *player, Board board[]){
+
+    int maxLoan = calculateMaxLoan(*player, board);
+
+    if(player->loan.active == 1){
+
+        printf("Player already has an active loan\n");
+        return;
+
+    }
+
+    if(maxLoan <= 0){
+
+        printf("No available collateral\n");
+        return;
+
+    }
+
+    player->loan.active = 1;
+
+    player->loan.loanAmount = maxLoan;
+
+    player->loan.collateralValue = maxLoan / 0.75;
+
+    player->loan.interest = 0;
+
+    player->loan.maturity = 10;
+
+    player->money += maxLoan;
+
+    printf("Loan obtained: LKR %d\n", maxLoan);
+
+}
+
+void repayLoan(Player *player, int amount){
+
+    if(player->loan.active == 0){
+
+        printf("No active loan\n");
+        return;
+
+    }
+
+    if(amount > player->money){
+
+        printf("Insufficient money\n");
+        return;
+
+    }
+
+    player->money -= amount;
+
+    player->loan.loanAmount -= amount;
+
+
+    if(player->loan.loanAmount <= 0){
+
+        player->loan.active = 0;
+
+        player->loan.loanAmount = 0;
+
+        printf("Loan fully repaid\n");
+
+    }
+
+}
+
+void applyLoanInterest(Player players[], int playerCount){
+
+    for(int i = 0; i < playerCount; i++){
+
+        if(players[i].loan.active == 1){
+
+            int interest = players[i].loan.loanAmount * 10 / 100;
+
+            players[i].loan.interest += interest;
+
+            players[i].loan.loanAmount += interest;
+
+        }
+
+    }
+
+}
+
+void foreclosure(Player *player, Board board[]){
+
+    printf("Foreclosure started for player %s\n", player->name);
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY){
+
+            if(board[i].property.ownerID == player->id){
+
+                board[i].property.ownerID = -1;
+
+                board[i].property.buildings = 0;
+
+                board[i].property.insuranceStatus = 0;
+
+            }
+
+        }
+
+    }
+
+    player->loan.active = 0;
+
+    player->loan.loanAmount = 0;
+
+    printf("Debt cancelled\n");
+
+}
+
+void bankTransaction(Player *player, Board board[]){
+
+    int choice;
+
+    printf("\nBank of Ceylon\n");
+    printf("1. Obtain Loan\n");
+    printf("2. Repay Loan\n");
+    printf("3. Refinance Loan\n");
+    printf("4. Increase Loan Amount\n");
+    printf("5. Repay Loan Fully\n");
+
+    printf("Select transaction: ");
+    scanf("%d",&choice);
+
+
+    switch(choice){
+
+        case 1:
+            obtainLoan(player, board);
+            break;
+
+        case 2:
+            printf("Enter repayment amount: ");
+            int amount;
+            scanf("%d",&amount);
+
+            repayLoan(player, amount);
+            break;
+
+        case 3:
+            refinanceLoan(player, board);
+            break;
+
+        case 4:
+            increaseLoan(player, board);
+            break;
+
+        case 5:
+            repayFullLoan(player);
+            break;
+
+        default:
+            printf("Invalid option\n");
+
+    }
+
+}
+
+void refinanceLoan(Player *player, Board board[]){
+
+    if(player->loan.active == 0){
+
+        printf("No active loan\n");
+        return;
+
+    }
+
+    int newLoan = calculateMaxLoan(*player, board);
+
+    if(newLoan <= player->loan.loanAmount){
+
+        printf("Cannot refinance\n");
+        return;
+
+    }
+
+    int difference = newLoan - player->loan.loanAmount;
+
+    player->loan.loanAmount = newLoan;
+
+    player->money += difference;
+
+    printf("Loan refinanced. Additional money: LKR %d\n",difference);
+
+}
+
+void increaseLoan(Player *player, Board board[]){
+
+    if(player->loan.active == 0){
+
+        printf("No active loan\n");
+        return;
+
+    }
+
+    int maxLoan = calculateMaxLoan(*player, board);
+
+    if(maxLoan <= player->loan.loanAmount){
+
+        printf("Maximum loan already reached\n");
+        return;
+
+    }
+
+    int increase = maxLoan - player->loan.loanAmount;
+
+    player->loan.loanAmount = maxLoan;
+
+    player->money += increase;
+
+    printf("Loan increased by LKR %d\n",increase);
+
+}
+
+void repayFullLoan(Player *player){
+
+    if(player->loan.active == 0){
+
+        printf("No active loan\n");
+        return;
+
+    }
+
+    if(player->money < player->loan.loanAmount){
+
+        printf("Not enough money\n");
+        return;
+
+    }
+
+    player->money -= player->loan.loanAmount;
+
+    player->loan.loanAmount = 0;
+
+    player->loan.active = 0;
+
+    printf("Loan completely repaid\n");
+
+}
+
+void checkLoanMaturity(Player players[], int playerCount, Board board[]){
+
+    for(int i=0;i<playerCount;i++){
+
+        if(players[i].loan.active == 1){
+
+            players[i].loan.maturity--;
+
+
+            if(players[i].loan.maturity <= 0){
+
+                foreclosure(&players[i], board);
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+insurance_company.c
+#include <stdio.h>
+
+#include "../include/insurance.h"
+
+
+void purchaseInsurance(Player *player, Board board[]){
+
+    int propertyID;
+    int choice;
+
+    printf("\nSelect property to insure:\n");
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id){
+
+            printf("%d. %s\n", board[i].id, board[i].name);
+
+        }
+
+    }
+
+
+    printf("Enter property ID: ");
+    scanf("%d",&propertyID);
+
+    if(board[propertyID].property.ownerID != player->id){
+
+        printf("You do not own this property\n");
+        return;
+
+    }
+
+    printf("\nSelect Insurance Type\n");
+
+    printf("1. Basic Insurance\n");
+    printf("2. Comprehensive Insurance\n");
+    printf("3. Business Interruption Insurance\n");
+
+    printf("Choice: ");
+    scanf("%d",&choice);
+
+
+    InsuranceType type;
+
+
+    switch(choice){
+
+        case 1:
+            type = BASIC_INSURANCE;
+            break;
+
+        case 2:
+            type = COMPREHENSIVE_INSURANCE;
+            break;
+
+        case 3:
+            type = BUSINESS_INTERRUPTION_INSURANCE;
+            break;
+
+        default:
+
+            printf("Invalid option\n");
+            return;
+
+    }
+
+
+
+    Board *property = &board[propertyID];
+
+
+    int premium = calculatePremium(property, type);
+
+
+    if(player->money < premium){
+
+        printf("Not enough money\n");
+        return;
+
+    }
+
+    player->money -= premium;
+
+    
+    property->property.insuranceStatus = 1;
+
+    property->property.insurance.type = type;
+
+    property->property.insurance.premium = premium;
+
+    property->property.insurance.remainingRounds = 20;
+
+    property->property.insurance.lostIncomeRounds = 0;
+
+    property->property.insurance.disasterActive = 0;
+
+    printf("Insurance purchased for %s\n", property->name);
+
+}
+
+
+void renewInsurance(Player *player, Board *property){
+
+    if(property->property.insuranceStatus == 0){
+
+        printf("No active insurance\n");
+        return;
+
+    }
+
+    int premium = property->property.insurance.premium;
+
+    if(player->money < premium){
+
+        printf("Not enough money\n");
+        return;
+
+    }
+
+    player->money -= premium;
+
+    property->property.insurance.remainingRounds = 20;
+
+    printf("%s insurance renewed\n", property->name);
+
+}
+
+
+void updateInsurance(Board board[]){
+
+    for(int i = 0; i < 40; i++){
+
+        Board *property = &board[i];
+
+        if(property->property.insurance.lostIncomeRounds > 0){
+
+            printf("%s lost rental income compensation round\n", property->name);
+
+            property->property.insurance.lostIncomeRounds--;
+
+        }
+
+        if(property->type == PROPERTY && property->property.insuranceStatus == 1){
+
+            property->property.insurance.remainingRounds--;
+
+            if(property->property.insurance.remainingRounds == 3){
+
+                printf("Notification: %s insurance expires in 3 rounds\n", property->name);
+
+            }
+
+            if(property->property.insurance.remainingRounds <= 0){
+
+                property->property.insuranceStatus = 0;
+
+                property->property.insurance.type = NO_INSURANCE;
+
+                property->property.insurance.premium = 0;
+
+                property->property.insurance.lostIncomeRounds = 0;
+
+                property->property.insurance.disasterActive = 0;
+
+
+                printf("%s insurance expired\n", property->name);
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+insurance_policy.c
+#include <stdio.h>
+
+#include "../include/insurance.h"
+
+
+int calculatePremium(Board *property, InsuranceType type){
+
+    int value = property->property.purchasePrice;
+
+    switch(type){
+
+        case BASIC_INSURANCE:
+            return value * 5 / 100;
+
+
+        case COMPREHENSIVE_INSURANCE:
+            return value * 10 / 100;
+
+
+        case BUSINESS_INTERRUPTION_INSURANCE:
+            return value * 15 / 100;
+
+
+        default:
+            return 0;
+
+    }
+
+}
+
+
+int calculateLostRentalIncome(Board *property){
+
+    int rent = property->property.baseRent;
+
+    return rent * 5;
+
+}
+
+
+int calculateCompensation(Board *property, int repairCost){
+
+    InsuranceType type = property->property.insurance.type;
+
+    switch(type){
+
+        case BASIC_INSURANCE:
+
+            return repairCost * 80 / 100;
+
+
+        case COMPREHENSIVE_INSURANCE:
+
+            return repairCost;
+
+
+        case BUSINESS_INTERRUPTION_INSURANCE:
+
+            if(property->property.buildings == HOTEL){
+
+                int lostIncome = calculateLostRentalIncome(property);
+
+                return repairCost + lostIncome;
+
+            }
+
+            return 0;
+
+
+        default:
+
+            return 0;
+    }
+
+}
+
+
+
+disaster.c
+ #include <stdio.h>
+
+#include "../include/insurance.h"
+
+
+void applyDisaster(Board *property, Player *owner, int repairCost){
+
+    if(property->property.insuranceStatus == 1){
+
+        int compensation = calculateCompensation(property, repairCost);
+
+        owner->money += compensation;
+
+        if(property->property.insurance.type == BUSINESS_INTERRUPTION_INSURANCE && property->property.buildings == HOTEL){
+
+            property->property.insurance.lostIncomeRounds = 5;
+
+        }
+
+        printf("Insurance compensation received: LKR %d\n", compensation);
+
+    }else{
+
+        owner->money -= repairCost;
+
+        printf("No insurance. Owner paid repair cost: LKR %d\n",
+        repairCost);
+
+    }
+
+}
+
+
+
+
+insurance.c
+#include <stdio.h>
+
+#include "../include/insurance.h"
+
+
+void processDisaster(Board *property, Player *owner, int repairCost){
+
+    applyDisaster(property, owner, repairCost);
+
+}
+
+
+void buyInsurance(Player *player, Board board[]){
+
+    purchaseInsurance(player, board);
+
+}
+
+
+void renewPolicy(Player *player, Board *property){
+
+    renewInsurance(player, property);
+
+}
+
+
+void updateInsuranceSystem(Board board[]){
+
+    updateInsurance(board);
+
+}
+
+
+
+
+players.c
+#include <stdio.h>
+#include <string.h>
+
+#include "../include/players.h"
+
+
+void createPlayer(Player *player, int id, char name[]){
+
+    player->id = id;
+
+    strcpy(player->name, name);
+
+    player->money = 10000;
+
+    player->position = 0;
+
+    player->bankrupt = 0;
+
+    player->propertyCount = 0;
+
+
+
+
+    player->loan.active = 0;
+
+    player->loan.loanAmount = 0;
+
+    player->loan.interest = 0;
+
+    player->loan.collateralValue = 0;
+
+    player->loan.maturity = 0;
+
+}
+
+
+
+
+
+
+
+main.c
+#include <stdio.h>
+
+#include "../include/board.h"
+
+
+int main(){
+
+    Board board[40];
+
+    initializeBoard(board);
+    displayBoard(board);
+
+    return 0;
+
+}
