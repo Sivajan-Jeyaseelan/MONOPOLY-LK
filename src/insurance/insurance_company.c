@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../include/insurance/insurance_company.h"
+#include "../include/insurance.h"
 
 
 void purchaseInsurance(Player *player, Board board[]){

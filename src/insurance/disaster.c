@@ -1,6 +1,6 @@
  #include <stdio.h>
 
-#include "../include/insurance/disaster.h"
+#include "../include/insurance.h"
 
 
 void applyDisaster(Board *property, Player *owner, int repairCost){

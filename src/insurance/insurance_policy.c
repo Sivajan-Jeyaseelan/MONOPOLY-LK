@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../include/insurance/insurance_policy.h"
+#include "../include/insurance.h"
 
 
 int calculatePremium(Board *property, InsuranceType type){
