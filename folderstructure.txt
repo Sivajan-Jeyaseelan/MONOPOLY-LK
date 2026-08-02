@@ -16,6 +16,7 @@ MONOPOLY_LK
 │   ├── insurance.h 
 │   ├── movement.h 
 │   ├── players.h
+│   ├── property.h
 │   └── types.h
 │
 ├── output/
