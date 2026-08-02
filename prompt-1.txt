@@ -259,8 +259,17 @@ void displayBoard(Board board[]);
 #endif
 
 
+9)dice.h
+#ifndef DICE_H
+#define DICE_H
 
-9)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+int rollDice();
+
+#endif
+
+
+
+10)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
 #ifndef BANK_H
 #define BANK_H
 

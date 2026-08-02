@@ -1306,8 +1306,22 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 }
 
 
+15)dice.c
+#include <stdlib.h>
+#include "../include/dice.h"
 
-15)main.c
+
+int rollDice(){
+
+    int dice1 = (rand() % 6) + 1;
+    int dice2 = (rand() % 6) + 1;
+
+    return dice1 + dice2;
+
+}
+
+
+16)main.c
 #include <stdio.h>
 
 #include "../include/board.h"
