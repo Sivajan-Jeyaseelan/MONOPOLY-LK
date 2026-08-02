@@ -35,8 +35,7 @@ MONOPOLY_LK
 │   ├── insurance_company.c
 │   ├── insurance_policy.c
 │   ├── insurance.c
-│   ├── game.c
-│   ├── movement.c
+│   ├── main.c
 │   ├── movement.c
 │   ├── players.c
 │   └── property.c
