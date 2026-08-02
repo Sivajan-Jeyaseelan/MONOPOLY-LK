@@ -1021,7 +1021,122 @@ void createPlayer(Player *player, int id, char name[]){
 }
 
 
-12)main.c
+12)movement.c
+#include <stdio.h>
+
+#include "../include/movement.h"
+
+void movePlayer(Player *player, int steps){
+
+    int oldPosition = player->position;
+
+    player->position += steps;
+
+    if(player->position >= 40){
+
+        player->position = player->position - 40;
+
+        player->money += 2000;
+
+        printf("%s passed/landed on GO and received LKR 2000\n", player->name);
+
+    }
+
+
+    printf("%s moved from %d to %d\n", player->name, oldPosition, player->position);
+
+}
+
+
+
+13)game.c
+#include <stdio.h>
+
+#include "../include/game.h"
+#include "../include/dice.h"
+
+
+void determineFirstPlayer(Player players[], int turnOrder[]){
+
+    int highest = -1;
+    int firstPlayer = -1;
+
+    for(int i = 0; i < 4; i++){
+
+        int roll = rollDice();
+
+        printf("%s rolled %d\n", players[i].name, roll);
+
+        if(roll > highest){
+
+            highest = roll;
+            firstPlayer = i;
+
+        }
+
+    }
+
+
+    printf("\n%s will begin the game.\n", players[firstPlayer].name);
+
+
+    for(int i = 0; i < 4; i++){
+
+        turnOrder[i] = (firstPlayer + i) % 4;
+
+    }
+
+
+    printf("\nTurn Order:\n");
+
+
+    for(int i = 0; i < 4; i++){
+
+        printf("%s\n", players[turnOrder[i]].name);
+
+    }
+
+}
+
+void playTurn(Player *player, Board board[]){
+
+    printf("\n%s's turn\n", player->name);
+
+    printf("Checking penalties...\n");
+
+    int dice = rollDice();
+
+    printf("%s rolled %d\n", player->name, dice);
+
+
+    player->position += dice;
+
+    if(player->position >= 40){
+
+        player->position -= 40;
+
+        player->money += 2000;
+
+        printf("%s passed GO and received LKR 2000\n", player->name);
+
+    }
+
+    printf("Current position: %d\n", player->position);
+
+    printf("Resolving landing action...\n");
+
+    printf("Checking property purchase...\n");
+
+    printf("Checking building construction...\n");
+
+    printf("Completing financial transactions...\n");
+
+    printf("Turn ended\n");
+
+}
+
+
+14)main.c
 #include <stdio.h>
 
 #include "../include/board.h"
