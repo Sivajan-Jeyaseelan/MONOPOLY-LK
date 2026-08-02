@@ -8,6 +8,10 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
 void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 
+void purchaseProperty(Player *player, Board *property);
+void auctionProperty(Player players[], int playerCount, Board *property);
+void resolveProperty(Player *player, Player players[], int playerCount, Board board[]);
+
 void initializeBoard(Board board[]);
 
 void displayBoard(Board board[]);

@@ -2,6 +2,20 @@
 
 #include "../include/game.h"
 #include "../include/dice.h"
+#include "../include/board.h"
+
+
+
+Player *allPlayers;
+int totalPlayers;
+
+
+void setPlayers(Player players[], int playerCount){
+
+    allPlayers = players;
+    totalPlayers = playerCount;
+
+}
 
 
 void determineFirstPlayer(Player players[], int turnOrder[]){
@@ -73,7 +87,7 @@ void playTurn(Player *player, Board board[]){
 
     printf("Resolving landing action...\n");
 
-    printf("Checking property purchase...\n");
+    resolveProperty(player, allPlayers, totalPlayers, board);
 
     printf("Checking building construction...\n");
 
