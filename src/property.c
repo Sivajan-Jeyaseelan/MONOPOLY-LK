@@ -138,6 +138,16 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 
         int owner = currentSquare->property.ownerID;
 
+        if(currentSquare->property.mortgageStatus == 1){
+
+            printf("%s landed on %s\n", player->name, currentSquare->name);
+
+            printf("Property is mortgaged. No rent collected.\n");
+
+            return;
+
+        }
+
         int rent = currentSquare->property.baseRent;
 
         player->money -= rent;
