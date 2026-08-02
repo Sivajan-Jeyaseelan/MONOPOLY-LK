@@ -1,4 +1,4 @@
-types.h
+1)types.h
 #ifndef TYPES_H
 #define TYPES_H
 
@@ -151,66 +151,30 @@ typedef struct{
 #endif
 
 
-
-finance.h
-#ifndef FINANCE_H
-#define FINANCE_H
+2)players.h
+#ifndef PLAYERS_H
+#define PLAYERS_H
 
 #include "types.h"
 
-
-int calculateRailwayRent(Board board[], int playerID);
-int calculateUtilityRent(Board board[], int ownerID, int diceValue);
-
+void createPlayer(Player *player, int id, char name[]);
 
 #endif
 
 
 
-board.h
-#ifndef BOARD_H
-#define BOARD_H
+3)movement.h
+#ifndef MOVEMENT_H
+#define MOVEMENT_H
 
 #include "types.h"
 
-void createSquare(Board *square, int id, char name[], SquareType type);
-void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel);
-void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
-void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
-
-void initializeBoard(Board board[]);
-
-void displayBoard(Board board[]);
+void movePlayer(Player *player, int steps);
 
 #endif
 
 
-
-
-bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
-#ifndef BANK_H
-#define BANK_H
-
-#include "types.h"
-
-int calculateMaxLoan(Player player, Board board[]);
-void obtainLoan(Player *player, Board board[]);
-void repayLoan(Player *player, int amount);
-void applyLoanInterest(Player players[], int playerCount);
-void foreclosure(Player *player, Board board[]);
-void bankTransaction(Player *player, Board board[]);
-void refinanceLoan(Player *player, Board board[]);
-void increaseLoan(Player *player, Board board[]);
-void repayFullLoan(Player *player);
-void checkLoanMaturity(Player players[], int playerCount, Board board[]);
-
-
-
-#endif
-
-
-
-insurance.h
+4)insurance.h
 #ifndef DISASTER_H
 #define DISASTER_H
 
@@ -231,14 +195,78 @@ void applyDisaster(Board *property, Player *owner, int repairCost);
 #endif
 
 
-
-
-players.h
-#ifndef PLAYERS_H
-#define PLAYERS_H
+5)game.h
+#ifndef GAME_H
+#define GAME_H
 
 #include "types.h"
 
-void createPlayer(Player *player, int id, char name[]);
+void determineFirstPlayer(Player players[], int turnOrder[]);
+void playTurn(Player *player, Board board[]);
+
+#endif
+
+
+6)finance.h
+#ifndef FINANCE_H
+#define FINANCE_H
+
+#include "types.h"
+
+
+int calculateRailwayRent(Board board[], int playerID);
+int calculateUtilityRent(Board board[], int ownerID, int diceValue);
+
+
+#endif
+
+
+7)dice.h
+#ifndef DICE_H
+#define DICE_H
+
+int rollDice();
+
+#endif
+
+
+
+8)board.h
+#ifndef BOARD_H
+#define BOARD_H
+
+#include "types.h"
+
+void createSquare(Board *square, int id, char name[], SquareType type);
+void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel);
+void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
+void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
+
+void initializeBoard(Board board[]);
+
+void displayBoard(Board board[]);
+
+#endif
+
+
+
+9)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+#ifndef BANK_H
+#define BANK_H
+
+#include "types.h"
+
+int calculateMaxLoan(Player player, Board board[]);
+void obtainLoan(Player *player, Board board[]);
+void repayLoan(Player *player, int amount);
+void applyLoanInterest(Player players[], int playerCount);
+void foreclosure(Player *player, Board board[]);
+void bankTransaction(Player *player, Board board[]);
+void refinanceLoan(Player *player, Board board[]);
+void increaseLoan(Player *player, Board board[]);
+void repayFullLoan(Player *player);
+void checkLoanMaturity(Player players[], int playerCount, Board board[]);
+
+
 
 #endif

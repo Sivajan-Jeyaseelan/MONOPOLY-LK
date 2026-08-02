@@ -1,4 +1,4 @@
-finance.c
+1)finance.c
 #include "../include/finance.h"
 
 
@@ -74,7 +74,7 @@ int calculateUtilityRent(Board board[], int ownerID, int diceValue){
 
 
 
-board_display.c
+2)board_display.c
 #include <stdio.h>
 
 #include "../include/board.h"
@@ -143,9 +143,7 @@ void displayBoard(Board board[]){
 
 
 
-
-
-board_factory.c
+3)board_factory.c
 #include <stdio.h>
 #include <string.h>
 
@@ -231,9 +229,7 @@ void createUtility(Board *square, int id, char name[], int purchasePrice, int mo
 
 
 
-
-
-board_initializer.c
+4)board_initializer.c
 #include "../include/board.h"
 
 
@@ -344,8 +340,7 @@ void initializeBoard(Board board[]){
 }
 
 
-
-board.c
+5)board.c
 #include "../include/board.h"
 
 
@@ -364,8 +359,7 @@ void showBoard(Board board[]){
 
 
 
-
-bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+6)bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
 #include <stdio.h>
 
 #include "../include/bank.h"
@@ -661,7 +655,7 @@ void checkLoanMaturity(Player players[], int playerCount, Board board[]){
 
 
 
-insurance_company.c
+7)insurance_company.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -840,7 +834,7 @@ void updateInsurance(Board board[]){
 
 
 
-insurance_policy.c
+8)insurance_policy.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -919,7 +913,7 @@ int calculateCompensation(Board *property, int repairCost){
 
 
 
-disaster.c
+9)disaster.c
  #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -953,9 +947,7 @@ void applyDisaster(Board *property, Player *owner, int repairCost){
 }
 
 
-
-
-insurance.c
+10)insurance.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -991,7 +983,8 @@ void updateInsuranceSystem(Board board[]){
 
 
 
-players.c
+
+11)players.c
 #include <stdio.h>
 #include <string.h>
 
@@ -1004,7 +997,7 @@ void createPlayer(Player *player, int id, char name[]){
 
     strcpy(player->name, name);
 
-    player->money = 10000;
+    player->money = 30000;
 
     player->position = 0;
 
@@ -1028,12 +1021,7 @@ void createPlayer(Player *player, int id, char name[]){
 }
 
 
-
-
-
-
-
-main.c
+12)main.c
 #include <stdio.h>
 
 #include "../include/board.h"
