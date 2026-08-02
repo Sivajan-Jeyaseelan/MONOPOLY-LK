@@ -9,10 +9,12 @@ MONOPOLY_LK
 ├── include/
 │   ├── bank.h
 │   ├── board.h
+│   ├── dice.h
 │   ├── events.h
 │   ├── finance.h
 │   ├── game.h
 │   ├── insurance.h 
+│   ├── movement.h 
 │   ├── players.h
 │   └── types.h
 │
@@ -25,7 +27,7 @@ MONOPOLY_LK
 │   ├── board_factory.c
 │   ├── board_initializer.c
 │   ├── board.c
-│   ├── board.c
+│   ├── dice.c
 │   ├── disaster.c
 │   ├── events.c
 │   ├── finance.c
