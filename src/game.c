@@ -45,3 +45,40 @@ void determineFirstPlayer(Player players[], int turnOrder[]){
     }
 
 }
+
+void playTurn(Player *player, Board board[]){
+
+    printf("\n%s's turn\n", player->name);
+
+    printf("Checking penalties...\n");
+
+    int dice = rollDice();
+
+    printf("%s rolled %d\n", player->name, dice);
+
+
+    player->position += dice;
+
+    if(player->position >= 40){
+
+        player->position -= 40;
+
+        player->money += 2000;
+
+        printf("%s passed GO and received LKR 2000\n", player->name);
+
+    }
+
+    printf("Current position: %d\n", player->position);
+
+    printf("Resolving landing action...\n");
+
+    printf("Checking property purchase...\n");
+
+    printf("Checking building construction...\n");
+
+    printf("Completing financial transactions...\n");
+
+    printf("Turn ended\n");
+
+}
