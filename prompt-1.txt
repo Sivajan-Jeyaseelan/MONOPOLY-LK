@@ -201,8 +201,14 @@ void applyDisaster(Board *property, Player *owner, int repairCost);
 
 #include "types.h"
 
+
+extern Player *allPlayers;
+extern int totalPlayers;
+
+void setPlayers(Player players[], int playerCount);
 void determineFirstPlayer(Player players[], int turnOrder[]);
 void playTurn(Player *player, Board board[]);
+
 
 #endif
 
@@ -242,6 +248,10 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
 void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 
+void purchaseProperty(Player *player, Board *property);
+void auctionProperty(Player players[], int playerCount, Board *property);
+void resolveProperty(Player *player, Player players[], int playerCount, Board board[]);
+
 void initializeBoard(Board board[]);
 
 void displayBoard(Board board[]);
@@ -270,3 +280,6 @@ void checkLoanMaturity(Player players[], int playerCount, Board board[]);
 
 
 #endif
+
+
+prompt 1 wait until prompt 2
