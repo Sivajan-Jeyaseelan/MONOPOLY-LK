@@ -2,7 +2,7 @@
 
 #include "../include/game.h"
 #include "../include/dice.h"
-#include "../include/board.h"
+#include "../include/property.h"
 
 
 

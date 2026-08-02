@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 
-#include "../include/board.h"
+#include "../include/property.h"
 
 
 void purchaseProperty(Player *player, Board *property){
