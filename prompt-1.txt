@@ -236,8 +236,22 @@ int rollDice();
 #endif
 
 
+8)property.h
+#ifndef PROPERTY_H
+#define PROPERTY_H
 
-8)board.h
+#include "types.h"
+
+
+void purchaseProperty(Player *player, Board *property);
+void auctionProperty(Player players[], int playerCount, Board *property);
+void resolveProperty(Player *player, Player players[], int playerCount, Board board[]);
+
+
+#endif
+
+
+9)board.h
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -248,10 +262,6 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
 void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 
-void purchaseProperty(Player *player, Board *property);
-void auctionProperty(Player players[], int playerCount, Board *property);
-void resolveProperty(Player *player, Player players[], int playerCount, Board board[]);
-
 void initializeBoard(Board board[]);
 
 void displayBoard(Board board[]);
@@ -259,7 +269,7 @@ void displayBoard(Board board[]);
 #endif
 
 
-9)dice.h
+10)dice.h
 #ifndef DICE_H
 #define DICE_H
 
@@ -269,7 +279,7 @@ int rollDice();
 
 
 
-10)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+11)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
 #ifndef BANK_H
 #define BANK_H
 
