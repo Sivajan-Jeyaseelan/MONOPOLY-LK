@@ -251,7 +251,33 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 #endif
 
 
-9)board.h
+9)building.h
+#ifndef BUILDING_H
+#define BUILDING_H
+
+#include "types.h"
+
+
+void buildHouse(Player *player, Board *propertySquare, Board board[]);
+void buildHotel(Player *player, Board *propertySquare, Board board[]);
+
+
+#endif
+
+10)monopoly.h
+#ifndef MONOPOLY_H
+#define MONOPOLY_H
+
+#include "types.h"
+
+
+int checkMonopoly(Player *player, Board board[], int groupID);
+int canBuild(Player *player, Board *property, Board board[]);
+
+
+#endif
+
+11)board.h
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -279,7 +305,7 @@ int rollDice();
 
 
 
-11)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+12)bank.h(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
 #ifndef BANK_H
 #define BANK_H
 
