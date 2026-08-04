@@ -261,6 +261,8 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 void buildHouse(Player *player, Board *propertySquare, Board board[]);
 void buildHotel(Player *player, Board *propertySquare, Board board[]);
 
+void checkBuilding(Player *player, Board board[]);
+
 
 #endif
 

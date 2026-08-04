@@ -1054,7 +1054,8 @@ void movePlayer(Player *player, int steps){
 
 #include "../include/game.h"
 #include "../include/dice.h"
-#include "../include/board.h"
+#include "../include/property.h"
+#include "../include/building.h"
 
 
 
@@ -1142,6 +1143,7 @@ void playTurn(Player *player, Board board[]){
     resolveProperty(player, allPlayers, totalPlayers, board);
 
     printf("Checking building construction...\n");
+    checkBuilding(player, board);
 
     printf("Completing financial transactions...\n");
 
@@ -1316,7 +1318,166 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 }
 
 
-15)dice.c
+15)monopoly.c
+#include "../include/monopoly.h"
+
+
+int checkMonopoly(Player *player, Board board[], int groupID){
+
+    int totalProperties = 0;
+    int ownedProperties = 0;
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.groupID == groupID){
+
+            totalProperties++;
+
+            if(board[i].property.ownerID == player->id){
+
+                ownedProperties++;
+
+            }
+
+        }
+
+    }
+
+    if(totalProperties == ownedProperties){
+        return 1;   
+    }
+
+    return 0; 
+
+}
+
+
+int canBuild(Player *player, Board *property, Board board[]){
+
+    if(property->property.ownerID != player->id){
+        return 0;
+    }
+
+    if(checkMonopoly(player, board, property->property.groupID) == 0){
+        return 0;
+    }
+
+    if(property->property.mortgageStatus == 1){
+        return 0;
+    }
+
+    return 1;
+
+}
+
+
+16)building.c
+#include <stdio.h>
+
+#include "../include/building.h"
+#include "../include/monopoly.h"
+
+
+void buildHouse(Player *player, Board *propertySquare, Board board[]){
+
+    if(canBuild(player, propertySquare, board) == 0){
+
+        printf("Construction not allowed on %s\n", propertySquare->name);
+        return;
+
+    }
+
+    if(propertySquare->property.buildings == HOTEL){
+
+        printf("%s already has a hotel\n", propertySquare->name);
+        return;
+
+    }
+
+    int cost = propertySquare->property.houseCost;
+
+    if(player->money < cost){
+
+        printf("Not enough money to build a house\n");
+        return;
+
+    }
+
+    player->money -= cost;
+
+    propertySquare->property.buildings = HOUSE;
+
+    printf("%s built a house on %s\n", player->name, propertySquare->name);
+
+}
+
+
+void buildHotel(Player *player, Board *propertySquare, Board board[]){
+
+    if(canBuild(player, propertySquare, board) == 0){
+
+        printf("Cannot build hotel on %s\n", propertySquare->name);
+        return;
+
+    }
+
+
+    if(propertySquare->property.buildings != HOUSE){
+
+        printf("Cannot build hotel. Build a house first\n");
+        return;
+
+    }
+
+
+    int cost = propertySquare->property.hotelCost;
+
+
+    if(player->money < cost){
+
+        printf("Not enough money to build hotel\n");
+        return;
+
+    }
+
+
+    player->money -= cost;
+
+    propertySquare->property.buildings = HOTEL;
+
+    printf("%s built a hotel on %s\n", player->name, propertySquare->name);
+
+}
+
+
+void checkBuilding(Player *player, Board board[]){
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id){
+
+            if(canBuild(player, &board[i], board)){
+
+                if(board[i].property.buildings == NO_BUILDING){
+
+                    buildHouse(player, &board[i], board);
+
+                }else if(board[i].property.buildings == HOUSE){
+
+                    buildHotel(player, &board[i], board);
+
+                }
+
+            }
+
+        }
+
+    }
+    
+}
+
+
+17)dice.c
 #include <stdlib.h>
 #include "../include/dice.h"
 
@@ -1331,7 +1492,7 @@ int rollDice(){
 }
 
 
-16)main.c
+18)main.c
 #include <stdio.h>
 
 #include "../include/board.h"
