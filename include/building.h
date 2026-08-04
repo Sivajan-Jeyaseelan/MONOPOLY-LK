@@ -7,5 +7,7 @@
 void buildHouse(Player *player, Board *propertySquare, Board board[]);
 void buildHotel(Player *player, Board *propertySquare, Board board[]);
 
+void checkBuilding(Player *player, Board board[]);
+
 
 #endif

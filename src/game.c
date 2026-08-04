@@ -3,6 +3,7 @@
 #include "../include/game.h"
 #include "../include/dice.h"
 #include "../include/property.h"
+#include "../include/building.h"
 
 
 
@@ -90,6 +91,7 @@ void playTurn(Player *player, Board board[]){
     resolveProperty(player, allPlayers, totalPlayers, board);
 
     printf("Checking building construction...\n");
+    checkBuilding(player, board);
 
     printf("Completing financial transactions...\n");
 
