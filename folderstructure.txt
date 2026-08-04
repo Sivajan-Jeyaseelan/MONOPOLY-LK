@@ -28,6 +28,7 @@ MONOPOLY_LK
 │   ├── board_factory.c
 │   ├── board_initializer.c
 │   ├── board.c
+│   ├── building.c
 │   ├── dice.c
 │   ├── disaster.c
 │   ├── events.c
@@ -38,6 +39,7 @@ MONOPOLY_LK
 │   ├── insurance.c
 │   ├── main.c
 │   ├── movement.c
+│   ├── monopooly.c
 │   ├── players.c
 │   └── property.c
 |
