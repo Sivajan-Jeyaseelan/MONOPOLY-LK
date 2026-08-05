@@ -65,6 +65,7 @@ typedef struct{
     int ownerID;
     int mortgageStatus;
     int buildings;
+    int houseCount;
 
     int insuranceStatus;
     Insurance insurance;
@@ -262,6 +263,8 @@ void buildHouse(Player *player, Board *propertySquare, Board board[]);
 void buildHotel(Player *player, Board *propertySquare, Board board[]);
 
 void checkBuilding(Player *player, Board board[]);
+
+int canBuildHouseEvenly(Board board[], int groupID, Board *property);
 
 
 #endif
