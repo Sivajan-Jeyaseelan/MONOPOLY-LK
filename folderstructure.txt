@@ -1,3 +1,5 @@
+folder structure for now is
+
 MONOPOLY_LK
 │
 ├── assets/
@@ -9,11 +11,13 @@ MONOPOLY_LK
 ├── include/
 │   ├── bank.h
 │   ├── board.h
+│   ├── building.h
 │   ├── dice.h
 │   ├── events.h
 │   ├── finance.h
 │   ├── game.h
 │   ├── insurance.h 
+│   ├── monopoly.h 
 │   ├── movement.h 
 │   ├── players.h
 │   ├── property.h
