@@ -9,5 +9,7 @@ void buildHotel(Player *player, Board *propertySquare, Board board[]);
 
 void checkBuilding(Player *player, Board board[]);
 
+int canBuildHouseEvenly(Board board[], int groupID, Board *property);
+
 
 #endif

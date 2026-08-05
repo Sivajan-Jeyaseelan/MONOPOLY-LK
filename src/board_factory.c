@@ -34,6 +34,7 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
     square->property.insurance.lostIncomeRounds = 0;
     square->property.insurance.disasterActive = 0;
     square->property.buildings = NO_BUILDING;
+    square->property.houseCount = 0;
 
 }
 

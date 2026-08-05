@@ -64,6 +64,7 @@ typedef struct{
     int ownerID;
     int mortgageStatus;
     int buildings;
+    int houseCount;
 
     int insuranceStatus;
     Insurance insurance;
