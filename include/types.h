@@ -108,6 +108,7 @@ typedef struct{
     char name[50];
     SquareType type;
 
+    int taxAmount;
     Property property;
     Railway railway;
     Utility utility;
@@ -138,6 +139,9 @@ typedef struct{
     int position;
     int bankrupt;
     int propertyCount;
+
+    int inJail;    
+    int jailTurns;
 
     Loan loan;
 

@@ -13,6 +13,16 @@ void createSquare(Board *square, int id, char name[], SquareType type){
 }
 
 
+void createTaxSquare(Board *square, int id, char name[], int taxAmount){
+
+    square->id = id;
+    strcpy(square->name,name);
+    square->type = TAX;
+    square->taxAmount = taxAmount;
+
+}
+
+
 void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel){
 
     square->id = id;

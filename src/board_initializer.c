@@ -13,7 +13,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[3],3,"Maradana",1,1500,750,100,500,2000);
 
-    createSquare(&board[4], 4, "Income Tax", TAX);
+    createTaxSquare(&board[4], 4, "Income Tax", 500);
 
     createRailway(&board[5],5,"Colombo Fort Railway Station",2000,1000);
 
