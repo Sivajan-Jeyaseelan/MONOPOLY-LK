@@ -12,6 +12,7 @@ MONOPOLY_LK
 │   ├── bank.h
 │   ├── board.h
 │   ├── building.h
+│   ├── dept.h
 │   ├── dice.h
 │   ├── events.h
 │   ├── finance.h
@@ -21,6 +22,7 @@ MONOPOLY_LK
 │   ├── movement.h 
 │   ├── players.h
 │   ├── property.h
+│   ├── rules.h
 │   └── types.h
 │
 ├── output/
@@ -33,6 +35,7 @@ MONOPOLY_LK
 │   ├── board_initializer.c
 │   ├── board.c
 │   ├── building.c
+│   ├── dept.c
 │   ├── dice.c
 │   ├── disaster.c
 │   ├── events.c
@@ -45,7 +48,8 @@ MONOPOLY_LK
 │   ├── movement.c
 │   ├── monopooly.c
 │   ├── players.c
-│   └── property.c
+│   ├── property.c
+│   └── rules.c
 |
 │
 ├── test/
