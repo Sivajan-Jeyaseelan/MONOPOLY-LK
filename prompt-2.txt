@@ -1,3 +1,5 @@
+now
+
 1)finance.c
 #include "../include/finance.h"
 
@@ -72,9 +74,260 @@ int calculateUtilityRent(Board board[], int ownerID, int diceValue){
 }
 
 
+2)rules.c
+#include <stdio.h>
+
+#include "../include/rules.h"
+#include "../include/dept.h"
 
 
-2)board_display.c
+void resolveSquare(Player *player, Board board[]){
+
+    Board *currentSquare = &board[player->position];
+
+
+    if(currentSquare->type == TAX){
+
+        int taxAmount = currentSquare->taxAmount;
+
+
+        if(player->money >= taxAmount){
+
+            handleIncomeTax(player,currentSquare);
+
+        }
+        else{
+
+            recoverDebt(player,taxAmount,board);
+
+        }
+
+
+    }else if(currentSquare->type == SPECIAL){
+
+        if(currentSquare->id == 30){
+
+            sendPlayerToJail(player);
+
+        }
+
+    }
+
+}
+
+void handleIncomeTax(Player *player, Board *taxSquare){
+
+    int taxAmount = taxSquare->taxAmount;
+
+    if(player->money >= taxAmount){
+
+        player->money -= taxAmount;
+        printf("%s paid Income Tax LKR %d\n", player->name, taxAmount);
+
+    }
+
+}
+
+void sendPlayerToJail(Player *player){
+
+    player->position = 10;
+    player->inJail = 1;
+    player->jailTurns = 0;
+
+    printf("%s was sent to Jail\n", player->name);
+
+}
+
+void handleJail(Player *player){
+
+    if(player->inJail == 0){
+        return;
+    }
+
+    int choice;
+
+    printf("\n%s is in Jail\n", player->name);
+
+    printf("1. Pay bail (LKR 300)\n");
+    printf("2. Try rolling doubles\n");
+    printf("3. Stay in jail\n");
+
+    printf("Choice: ");
+    scanf("%d",&choice);
+
+
+    if(choice == 1){
+
+        if(player->money >= 300){
+
+            player->money -= 300;
+            player->inJail = 0;
+            player->jailTurns = 0;
+
+            printf("%s paid bail and left jail\n", player->name);
+
+        }else{
+
+            printf("Not enough money for bail\n");
+
+        }
+
+    }else if(choice == 2){
+
+        // connect dice logic here later
+
+        printf("Roll doubles checking not implemented yet\n");
+
+    }else if(choice == 3){
+
+        player->jailTurns++;
+
+        printf("%s stayed in jail (%d/3 turns)\n", player->name, player->jailTurns);
+
+        if(player->jailTurns >= 3){
+
+            player->inJail = 0;
+
+            player->jailTurns = 0;
+
+            printf("%s completed jail time and left\n", player->name);
+
+        }
+
+    }
+
+}
+
+3)dept.c
+#include <stdio.h>
+    
+#include "../include/dept.h"
+
+
+void recoverDebt(Player *player, int amount, Board board[]){
+
+    printf("%s needs to pay LKR %d\n", player->name, amount);
+
+    sellBuildings(player, board);
+
+    if(player->money >= amount){
+
+        player->money -= amount;
+        printf("%s paid the debt\n", player->name);
+        return;
+
+    }
+
+
+    mortgageProperties(player, board);
+
+    if(player->money >= amount){
+
+        player->money -= amount;
+        printf("%s paid the debt after mortgaging properties\n", player->name);
+        return;
+
+    }
+
+
+    // Cannot pay even after selling assets
+    printf("%s cannot recover the debt\n", player->name);
+
+    player->bankrupt = 1;
+
+    printf("%s declared bankrupt\n", player->name);
+
+}
+
+void sellBuildings(Player *player, Board board[]){
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id){
+
+            if(board[i].property.buildings == HOTEL){
+
+                player->money += board[i].property.hotelCost;
+
+                board[i].property.buildings = NO_BUILDING;
+                board[i].property.houseCount = 0;
+
+                printf("%s sold hotel on %s and received LKR %d\n", player->name, board[i].name, board[i].property.hotelCost);
+            
+            }else if(board[i].property.houseCount > 0){
+
+                int refund = board[i].property.houseCount * board[i].property.houseCost;
+
+                player->money += refund;
+
+
+                printf("%s sold %d houses on %s and received LKR %d\n", player->name, board[i].property.houseCount, board[i].name, refund);
+
+                board[i].property.houseCount = 0;
+                board[i].property.buildings = NO_BUILDING;
+
+            }
+
+        }
+
+    }
+
+}
+
+void mortgageProperties(Player *player, Board board[]){
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id){
+
+            if(board[i].property.mortgageStatus == 0){
+
+                player->money += board[i].property.mortgageValue;
+
+                board[i].property.mortgageStatus = 1;
+
+                printf("%s mortgaged %s and received LKR %d\n", player->name, board[i].name, board[i].property.mortgageValue);
+
+
+            }
+
+        }
+
+    }
+
+}
+
+int calculateAssets(Player *player, Board board[]){
+
+    int total = player->money;
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id) {
+
+            total += board[i].property.purchasePrice;
+
+            total += board[i].property.houseCount * board[i].property.houseCost;
+
+
+            if(board[i].property.buildings == HOTEL){
+                total += board[i].property.hotelCost;
+            }
+
+        }
+
+    }
+
+    if(player->loan.active){
+        total -= player->loan.loanAmount;
+    }
+
+    return total;
+
+}
+
+
+4)board_display.c
 #include <stdio.h>
 
 #include "../include/board.h"
@@ -143,7 +396,7 @@ void displayBoard(Board board[]){
 
 
 
-3)board_factory.c
+5)board_factory.c
 #include <stdio.h>
 #include <string.h>
 
@@ -155,6 +408,16 @@ void createSquare(Board *square, int id, char name[], SquareType type){
     square->id = id;
     strcpy(square->name,name);
     square->type = type;
+
+}
+
+
+void createTaxSquare(Board *square, int id, char name[], int taxAmount){
+
+    square->id = id;
+    strcpy(square->name,name);
+    square->type = TAX;
+    square->taxAmount = taxAmount;
 
 }
 
@@ -228,9 +491,7 @@ void createUtility(Board *square, int id, char name[], int purchasePrice, int mo
 
 }
 
-
-
-4)board_initializer.c
+6)board_initializer.c
 #include "../include/board.h"
 
 
@@ -246,7 +507,7 @@ void initializeBoard(Board board[]){
     // this square is a property
     createProperty(&board[3],3,"Maradana",1,1500,750,100,500,2000);
 
-    createSquare(&board[4], 4, "Income Tax", TAX);
+    createTaxSquare(&board[4], 4, "Income Tax", 500);
 
     createRailway(&board[5],5,"Colombo Fort Railway Station",2000,1000);
 
@@ -339,9 +600,7 @@ void initializeBoard(Board board[]){
     createProperty(&board[39],39,"Galle Face",8,5500,2750,600,3000,8000);
 
 }
-
-
-5)board.c
+7)board.c
 #include "../include/board.h"
 
 
@@ -360,7 +619,7 @@ void showBoard(Board board[]){
 
 
 
-6)bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
+8)bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
 #include <stdio.h>
 
 #include "../include/bank.h"
@@ -656,7 +915,7 @@ void checkLoanMaturity(Player players[], int playerCount, Board board[]){
 
 
 
-7)insurance_company.c
+9)insurance_company.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -835,7 +1094,7 @@ void updateInsurance(Board board[]){
 
 
 
-8)insurance_policy.c
+10)insurance_policy.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -914,8 +1173,8 @@ int calculateCompensation(Board *property, int repairCost){
 
 
 
-9)disaster.c
- #include <stdio.h>
+11)disaster.c
+#include <stdio.h>
 
 #include "../include/insurance.h"
 
@@ -948,7 +1207,7 @@ void applyDisaster(Board *property, Player *owner, int repairCost){
 }
 
 
-10)insurance.c
+12)insurance.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
@@ -985,7 +1244,7 @@ void updateInsuranceSystem(Board board[]){
 
 
 
-11)players.c
+13)players.c
 #include <stdio.h>
 #include <string.h>
 
@@ -1022,7 +1281,7 @@ void createPlayer(Player *player, int id, char name[]){
 }
 
 
-12)movement.c
+14)movement.c
 #include <stdio.h>
 
 #include "../include/movement.h"
@@ -1050,7 +1309,7 @@ void movePlayer(Player *player, int steps){
 
 
 
-13)game.c
+15)game.c
 #include <stdio.h>
 
 #include "../include/game.h"
@@ -1154,7 +1413,7 @@ void playTurn(Player *player, Board board[]){
 
 
 
-14)property.c
+16)property.c
 #include <stdio.h>
 
 
@@ -1319,7 +1578,7 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 }
 
 
-15)monopoly.c
+17)monopoly.c
 #include "../include/monopoly.h"
 
 
@@ -1372,7 +1631,7 @@ int canBuild(Player *player, Board *property, Board board[]){
 }
 
 
-16)building.c
+18)building.c
 #include <stdio.h>
 
 #include "../include/building.h"
@@ -1531,7 +1790,7 @@ void checkBuilding(Player *player, Board board[]){
 }
 
 
-17)dice.c
+19)dice.c
 #include <stdlib.h>
 #include "../include/dice.h"
 
@@ -1546,7 +1805,7 @@ int rollDice(){
 }
 
 
-18)main.c
+20)main.c
 #include <stdio.h>
 
 #include "../include/board.h"
