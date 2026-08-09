@@ -143,6 +143,9 @@ typedef struct{
     int bankrupt;
     int propertyCount;
 
+    int taxesDue;
+    int insuranceClaims;
+
     int inJail;    
     int jailTurns;
 
@@ -180,6 +183,9 @@ void recoverDebt(Player *player, int amount, Board board[]);
 void sellBuildings(Player *player, Board board[]);
 void mortgageProperties(Player *player, Board board[]);
 int calculateAssets(Player *player, Board board[]);
+
+void checkBankruptcy(Player *player, Board board[]);
+void declareBankruptcy(Player *player, Board board[]);
 
 #endif
 
@@ -240,6 +246,10 @@ extern int totalPlayers;
 void setPlayers(Player players[], int playerCount);
 void determineFirstPlayer(Player players[], int turnOrder[]);
 void playTurn(Player *player, Board board[]);
+
+int countActivePlayers(Player players[], int totalPlayers);
+int checkGameOver(Player players[], int totalPlayers);
+Player* findWinner(Player players[], int totalPlayers, Board board[]);
 
 
 #endif
