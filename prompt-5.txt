@@ -1,0 +1,263 @@
+Required Output Messages
+
+The simulation shall generate detailed output describing every significant event as given
+below.
+
+1) Before the Game Begins
+MONOPOLY-LK Simulation
+Player 1 : Aggressive Investor
+Player 2 : Conservative Banker
+Player 3 : Risk Taker
+Player 4 : Opportunistic Trader
+Each player begins with LKR 30,000.
+
+2)Determining the First Player
+Aggressive Investor rolls 9.
+Conservative Banker rolls 6.
+Risk Taker rolls 11.
+Opportunistic Trader rolls 5.
+Risk Taker will begin the game.
+Turn order:
+Risk Taker
+Opportunistic Trader
+Aggressive Investor
+Conservative Banker
+
+3)Dice Roll
+Aggressive Investor rolled 8.
+
+4)Player Movement
+Aggressive Investor moves from Square 12 to Square 20.
+
+5)Passing GO
+Aggressive Investor passed GO.
+Collected LKR 2,000.
+Current Balance : LKR 24,500.
+
+6)Purchasing Property
+Aggressive Investor purchased Galle Fort for LKR 4,500.
+Remaining Balance : LKR 18,000.
+
+7)Paying Rent
+Risk Taker landed on Galle Fort.
+Rent Paid : LKR 750.
+Owner : Aggressive Investor.
+
+8)Building Construction
+Aggressive Investor constructed one house on Galle Fort.
+Construction Cost : LKR 1,500.
+
+9)Hotel Construction
+Aggressive Investor upgraded Galle Fort to a Hotel.
+
+10)Obtaining a Loan
+Aggressive Investor obtained a secured loan.
+Loan Amount : LKR 15,000.
+Collateral :
+Galle Fort
+Unawatuna
+Interest Rate : 8%
+Duration : 20 Rounds
+
+11)Loan Repayment
+Aggressive Investor repaid LKR 5,000.
+Outstanding Balance :
+LKR 11,200.
+
+12)Loan Default
+Aggressive Investor has defaulted.
+Collateral has been foreclosed.
+Outstanding debt cleared.
+
+13)Disaster
+Flood occurred.
+Affected Property :
+Unawatuna.
+Insurance Claim Approved.
+Compensation Paid :
+LKR 2,500.
+
+14)Auction
+Auction Started.
+Property :
+Nuwara Eliya
+Opening Bid :
+LKR 3,500.
+Risk Taker bids LKR 3,750.
+Aggressive Investor bids LKR 4,000.
+Conservative Banker withdraws.
+Opportunistic Trader withdraws.
+Aggressive Investor wins the auction.
+
+15)Economic Event
+Economic Event
+Tourism Boom
+Southern Province properties increase in value by 15%.
+
+16)Government Regulation
+Government Regulation
+Housing Subsidy Introduced.
+Construction costs reduced by 30%.
+
+17)Property Depreciation
+Property
+Maharagama
+has depreciated by 5%.
+Current Value
+LKR 4,750
+
+18)Insurance Expiry
+Insurance policy on Galle Fort expires in 3 rounds.
+
+19)Bankruptcy
+Risk Taker has been declared bankrupt.
+Remaining assets transferred to the Bank.
+
+20)End of Every Round
+
+======================
+Round 37 Summary  
+======================
+
+Aggressive Investor  
+Cash : LKR 12,300  
+Net Worth : LKR 82,500 
+Properties : 12 
+Hotels : 3  
+Outstanding Loan : LKR 6,500 
+
+---------------------------------
+
+Conservative Banker  
+Cash : LKR 28,500  
+Net Worth : LKR 73,800  
+Properties : 9  
+Hotels : 1
+Outstanding Loan: None
+
+---------------------------------
+
+Risk Taker
+Cash : LKR 900
+Net Worth : LKR 64,000
+Properties : 15
+Hotels : 4
+Outstanding Loan : LKR 18,000
+
+---------------------------------
+
+Opportunistic Trader
+Cash : LKR 20,100
+Net Worth : LKR 77,200
+Properties : 10
+Hotels : 2
+Outstanding Loan : LKR 3,500
+
+---------------------------------
+
+21)End of Game 
+======================
+    End of Game 
+======================
+
+GAME OVER
+Winner
+Aggressive Investor
+Total Cash
+LKR 65,400
+Total Property Value 
+LKR 210,700
+Outstanding Loans
+None
+Net Worth
+LKR 276,100
+
+22)Rule-LK output messages
+=============================
+  Rule-LK output messages
+=============================
+Current Market Conditions
+=============================
+
+Market Boom
+---------------
+Southern Province (+20%)
+Rounds Remaining : 7
+
+Market Decline
+---------------
+Western Residential (-15%)
+Rounds Remaining : 4
+
+Regional Development
+---------------------
+Northern Development Programme (+30%)
+Rounds Remaining : 12
+
+Inflation
+-----------
++5%
+
+Current Loan Interest
+------------------------
+9%
+
+
+
+
+
+
+
+A) National Event Cards
+
+The simulation shall contain a deck of twenty (20) National Event Cards. Whenever a player
+lands on an Event square, the top card shall be drawn. After execution, the card shall be
+returned to the bottom of the deck. These effects are applicable to the player who drew the
+card for 15 rounds in addition to other modifiers.
+
+------------------------------------------------------------------------
+|    Card                |               Effect                        |
+|------------------------|---------------------------------------------|
+| Tourism Hype           | Hotels earn double rent for 5 rounds        |
+| Fuel Shortage          | Raise rent doubles for 5 rounds             |
+| Heavy Floods           | Rains cause coastal property damaged        |
+| Political Rally        | One random property closed for 2 rounds     |
+| Stock Market Rise      | All property values increase by 10%         |
+| Economic Downturn      | Property values decrease by 15%             |
+| Housing Subsidy        | House construction cost reduced by 30%      |
+| Interest Rate Cut      | Loan interest reduced by 2%                 |
+| Interest Rate Increase | Loan interest increased by 2%               |
+| Tax Amnesty            | Each player receives LKR 2,000              |
+| Power Failure          | Utility income halved for 3 rounds          |
+| Foreign Funding        | Commercial property values increase by 15%  |
+| Port Expansion         | Raise station values increase by 20%        |
+| Festival Season        | Hotels receive 50% additional rent          |
+| Labu Strike            | Construction suspended for 2 rounds         |
+| Insurance Discount     | Premiums reduced by 20%                     |
+| Property Revaluation   | Random property group appraisals by 15%     |
+| Currency Depreciation  | Construction costs increase by 10%          |
+| Government Grant       | Random player receives LKR 5,000            |
+| National Disaster      | Random developed property damaged           |
+------------------------------------------------------------------------
+
+B) Property Values
+
+--------------------------------------------------------------------------
+| Group      | Purchase Price | House Cost | Hotel Cost | Mortgage Value |
+|------------|----------------|------------|------------|----------------|
+| Brown      |    5,500       |   500      |   2,000    |      750       |
+| Light Blue |    2,500       |   750      |   3,000    |     1,250      |
+| Pink       |    3,500       |   1,000    |   4,000    |     1,750      |
+| Orange     |    4,500       |   1,250    |   5,000    |     2,250      |
+| Red        |    5,500       |   1,500    |   6,000    |     2,750      |
+| Yellow     |    6,500       |   2,000    |   8,000    |     3,250      |
+| Green      |    8,000       |   2,500    |   10,000   |     4,000      |
+| Dark Blue  |    10,000      |   3,000    |   12,000   |     5,000      |
+--------------------------------------------------------------------------
+
+
+MONOPOLY-LK we hv upto 36 new features 
+while developing,
+
+while at each rule small by small based on this also keep minde and give codes because we dont hv time to view and do at last .not implsmetn all this at one shot small by small while completing each rule
+(please small bey small prompt-4,prompt-5 implement through each rules not at once)
