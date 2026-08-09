@@ -140,6 +140,9 @@ typedef struct{
     int bankrupt;
     int propertyCount;
 
+    int taxesDue;
+    int insuranceClaims;
+
     int inJail;    
     int jailTurns;
 

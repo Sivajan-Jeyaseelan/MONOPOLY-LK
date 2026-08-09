@@ -18,6 +18,51 @@ void setPlayers(Player players[], int playerCount){
 
 }
 
+int countActivePlayers(Player players[], int totalPlayers){
+
+    int count = 0;
+
+    for(int i=0;i<totalPlayers;i++){
+
+        if(players[i].bankrupt == 0){
+            count++;
+        }
+
+    }
+
+    return count;
+
+}
+
+int checkGameOver(Player players[], int totalPlayers){
+
+    return countActivePlayers(players,totalPlayers) == 1;
+
+}
+
+Player* findWinner(Player players[], int totalPlayers, Board board[]){
+
+    int highest = -1;
+    Player *winner = NULL;
+
+    for(int i=0;i<totalPlayers;i++){
+
+        if(players[i].bankrupt == 0){
+
+            int worth = calculateAssets(&players[i],board);
+
+            if(worth > highest){
+                highest = worth;
+                winner = &players[i];
+            }
+
+        }
+
+    }
+
+    return winner;
+
+}
 
 void determineFirstPlayer(Player players[], int turnOrder[]){
 

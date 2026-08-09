@@ -115,12 +115,72 @@ int calculateAssets(Player *player, Board board[]){
 
         }
 
+
+        // Railways
+        if(board[i].type == RAILWAY && board[i].railway.ownerID == player->id){
+            total += board[i].railway.purchasePrice;
+        }
+
+        // Utilities
+        if(board[i].type == UTILITY && board[i].utility.ownerID == player->id){
+            total += board[i].utility.purchasePrice;
+        }
+
     }
+
+    total += player->insuranceClaims;
 
     if(player->loan.active){
         total -= player->loan.loanAmount;
     }
 
+    total -= player->loan.interest;
+
+    total -= player->taxesDue;
+
     return total;
 
 }
+
+void checkBankruptcy(Player *player, Board board[]){
+
+    int assets = calculateAssets(player, board);
+
+    if(assets < 0){
+        declareBankruptcy(player, board);
+    }
+
+}
+
+void declareBankruptcy(Player *player, Board board[]){
+
+    printf("%s declared bankrupt\n", player->name);
+
+    for(int i=0;i<40;i++){
+
+        if(board[i].type == PROPERTY && board[i].property.ownerID == player->id){
+
+            // remove buildings
+            board[i].property.buildings = NO_BUILDING;
+
+            board[i].property.houseCount = 0;
+
+            // expire insurance
+            board[i].property.insuranceStatus = 0;
+
+            board[i].property.insurance.type = NO_INSURANCE;
+
+            // transfer property to bank
+            board[i].property.ownerID = -1;
+
+        }
+
+    }
+
+    // loan cleared
+    player->loan.active = 0;
+    player->loan.loanAmount = 0;    
+    player->bankrupt = 1;
+
+}
+

@@ -11,5 +11,9 @@ void setPlayers(Player players[], int playerCount);
 void determineFirstPlayer(Player players[], int turnOrder[]);
 void playTurn(Player *player, Board board[]);
 
+int countActivePlayers(Player players[], int totalPlayers);
+int checkGameOver(Player players[], int totalPlayers);
+Player* findWinner(Player players[], int totalPlayers, Board board[]);
+
 
 #endif

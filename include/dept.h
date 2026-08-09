@@ -8,4 +8,7 @@ void sellBuildings(Player *player, Board board[]);
 void mortgageProperties(Player *player, Board board[]);
 int calculateAssets(Player *player, Board board[]);
 
+void checkBankruptcy(Player *player, Board board[]);
+void declareBankruptcy(Player *player, Board board[]);
+
 #endif
