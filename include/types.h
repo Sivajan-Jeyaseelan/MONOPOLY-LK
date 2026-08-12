@@ -34,19 +34,69 @@ typedef enum{
 }InsuranceType; 
 
 
+// Loan transaction actions
+typedef enum{
+
+    LOAN_REPAY_PARTIAL,
+    LOAN_REPAY_FULL,
+    LOAN_EXTEND,
+    LOAN_INCREASE
+
+}LoanAction;
+
+
+// Disaster types
+typedef enum{
+
+    NO_DISASTER,
+    FIRE,
+    FLOOD,
+    RIOT,
+    BUILDING_COLLAPSE,
+    ELECTRICAL_FAILURE
+
+}DisasterType;
+
+
+// Economic event types
+typedef enum{
+
+    NO_ECONOMIC_EVENT,
+    TOURISM_BOOM,
+    FUEL_CRISIS,
+    HEAVY_MONSOON,
+    ECONOMIC_RECESSION,
+    STOCK_MARKET_BOOM,
+    GOVERNMENT_HOUSING_PROGRAMME,
+    FOREIGN_INVESTMENT,
+    POLITICAL_UNREST
+
+}EconomicEventType;
+
+
+// Auction status
+typedef enum{
+
+    AUCTION_CLOSED,
+    AUCTION_OPEN
+
+}AuctionStatus;
+
 
 // Insurance Structure
 typedef struct{
 
     InsuranceType type;
-
     int premium;
-
     int remainingRounds;
-
     int lostIncomeRounds;
-
     int disasterActive;
+
+    /* MONOPOLY-LK */
+    int active;
+    int propertyValue;
+    int coveragePercent;
+    int renewalReminderShown;
 
 }Insurance;
 
@@ -69,6 +119,15 @@ typedef struct{
     int insuranceStatus;
     Insurance insurance;
 
+    int loanLocked;
+    int damaged;
+    int propertyAge;
+    int depreciation;
+    int currentValue;
+    int currentRent;
+    int repairCost;
+    int renovationRequired;
+
     
 
 }Property;
@@ -84,6 +143,7 @@ typedef struct{
     int mortgageValue;
     int ownerID;
     int mortgageStatus;
+    int loanLocked;
 
 }Railway;
 
@@ -96,6 +156,7 @@ typedef struct{
     int mortgageValue;
     int ownerID;
     int mortgageStatus;
+    int loanLocked;
 
 }Utility;
 
@@ -126,6 +187,11 @@ typedef struct{
     int collateralValue;
     int maturity;
 
+    /* MONOPOLY-LK */
+    int originalAmount;
+    int remainingRounds;
+    int accumulatedInterest;
+
 }Loan;
 
 
@@ -148,11 +214,27 @@ typedef struct{
 
     Loan loan;
 
+    int loanLockedAssetCount;
+
 }Player;   
 
 
 
+typedef struct{
 
+    int inflationRate;
+    int previousInflationRate;
+
+    int tourismBoom;
+    int fuelCrisis;
+    int heavyMonsoon;
+    int economicRecession;
+    int stockMarketBoom;
+    int governmentHousingProgramme;
+    int foreignInvestment;
+    int politicalUnrest;
+
+}EconomicState;
 
 
 #endif
