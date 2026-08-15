@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../include/rules.h"
 #include "../include/dept.h"
@@ -67,56 +68,65 @@ void handleJail(Player *player){
         return;
     }
 
-    int choice;
-
     printf("\n%s is in Jail\n", player->name);
 
-    printf("1. Pay bail (LKR 300)\n");
-    printf("2. Try rolling doubles\n");
-    printf("3. Stay in jail\n");
+    /*
+     * Temporary autonomous decision:
+     * Pay bail if the player can afford it.
+     */
 
-    printf("Choice: ");
-    scanf("%d",&choice);
+    if(player->money >= 300){
+
+        player->money -= 300;
+        player->inJail = 0;
+        player->jailTurns = 0;
+
+        printf("%s paid LKR 300 bail and left Jail\n",
+               player->name);
+
+        return;
+    }
 
 
-    if(choice == 1){
+    /*
+     * Player cannot afford bail.
+     * Try rolling doubles.
+     */
 
-        if(player->money >= 300){
+    int dice1 = (rand() % 6) + 1;
+    int dice2 = (rand() % 6) + 1;
 
-            player->money -= 300;
-            player->inJail = 0;
-            player->jailTurns = 0;
+    printf("%s rolled %d and %d in Jail\n", player->name, dice1, dice2);
 
-            printf("%s paid bail and left jail\n", player->name);
+    if(dice1 == dice2){
 
-        }else{
+        player->inJail = 0;
+        player->jailTurns = 0;
 
-            printf("Not enough money for bail\n");
+        printf("%s rolled doubles and left Jail\n", player->name);
 
-        }
-
-    }else if(choice == 2){
-
-        // connect dice logic here later
-
-        printf("Roll doubles checking not implemented yet\n");
-
-    }else if(choice == 3){
-
-        player->jailTurns++;
-
-        printf("%s stayed in jail (%d/3 turns)\n", player->name, player->jailTurns);
-
-        if(player->jailTurns >= 3){
-
-            player->inJail = 0;
-
-            player->jailTurns = 0;
-
-            printf("%s completed jail time and left\n", player->name);
-
-        }
+        return;
 
     }
 
+
+    /*
+     * Doubles not rolled.
+     * Remain in Jail.
+     */
+
+    player->jailTurns++;
+
+    printf("%s remained in Jail (%d/3 turns)\n", player->name, player->jailTurns);
+
+
+    if(player->jailTurns >= 3){
+
+        player->inJail = 0;
+        player->jailTurns = 0;
+
+        printf("%s completed three Jail turns and left\n", player->name);
+
+    }
+    
 }
