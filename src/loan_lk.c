@@ -1,4 +1,8 @@
+#include <stdio.h>
+#include <stddef.h>
+
 #include "../include/loan_lk.h"
+#include "../include/loan_locked_lk.h"
 
 int calculateEligibleCollateral(Player *player, Board board[]){
 
@@ -70,4 +74,70 @@ int calculateMaximumLoan(Player *player, Board board[]){
 
     return maximumLoan;
     
+}
+
+void obtainLKLoan(Player *player, Board board[]){
+
+    if(player == NULL || board == NULL){
+        return;
+    }
+
+    if(player->loan.active == 1){
+
+        printf("%s already has an active loan.\n", player->name);
+        return;
+
+    }
+
+    int collateral = calculateEligibleCollateral(player, board);
+
+    if(collateral <= 0){
+
+        printf("%s has no eligible collateral.\n", player->name);
+        return;
+
+    }
+
+    int maximumLoan = collateral * 75 / 100;
+
+    if(maximumLoan <= 0){
+
+        printf("Eligible collateral is insufficient for a loan.\n");
+        return;
+
+    }
+
+    player->loan.active = 1;
+
+    player->loan.loanAmount = maximumLoan;
+
+    player->loan.originalAmount = maximumLoan;
+
+    player->loan.collateralValue = collateral;
+
+
+    //Set the MONOPOLY-LK interest rate here. Change this value if your specification gives a different rate.
+    player->loan.interest = 10;
+
+    player->loan.maturity = 20;
+
+    player->loan.remainingRounds = 20;
+
+    player->loan.accumulatedInterest = 0;
+
+    player->loanLockedAssetCount = 0;
+
+    lockLoanCollateral(player, board);
+
+    printf("\n=====================================\n");
+    printf("MONOPOLY-LK Loan Approved\n");
+    printf("=====================================\n");
+
+    printf("Collateral Value : LKR %d\n", collateral);
+    printf("Maximum Loan     : LKR %d\n", maximumLoan);
+    printf("Interest Rate    : %d%%\n", player->loan.interest);
+    printf("Duration         : %d rounds\n", player->loan.remainingRounds);
+
+    printf("=====================================\n");
+
 }

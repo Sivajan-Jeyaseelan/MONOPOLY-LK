@@ -55,7 +55,7 @@ int canExecuteLoanAction(Player *player, Board board[], LoanAction action){
 
         int availableCollateral = calculateEligibleCollateral(player, board);
 
-        if(availableCollateral > player->loan.collateralValue){
+        if(availableCollateral > 0){
             return 1;
         }
 
@@ -171,34 +171,42 @@ int executeLoanAction(Player *player, Board board[], LoanAction action){
     if(action == LOAN_INCREASE){
 
         int availableCollateral;
-        int additionalCollateral;
         int additionalLoan;
-
 
         availableCollateral = calculateEligibleCollateral(player, board);
 
-        additionalCollateral = availableCollateral - player->loan.collateralValue;
-
-        if(additionalCollateral <= 0){
+        if(availableCollateral <= 0){
 
             printf("%s has no additional collateral available.\n", player->name);
             return 0;
 
         }
 
-        additionalLoan = additionalCollateral;
+        additionalLoan = availableCollateral * 75 / 100;
+
+        if(additionalLoan <= 0){
+
+            printf("Additional collateral is insufficient for a loan increase.\n");
+            return 0;
+
+        }
 
         player->loan.loanAmount += additionalLoan;
 
         player->loan.originalAmount += additionalLoan;
 
-        player->loan.collateralValue += additionalLoan;  // need to check here
+        player->loan.collateralValue += availableCollateral;
 
         player->money += additionalLoan;
 
         printf("%s increased the loan amount.\n", player->name);
+
+        printf("Additional Collateral : LKR %d\n", availableCollateral);
+
         printf("Additional Loan : LKR %d\n", additionalLoan);
+
         printf("Total Outstanding Loan : LKR %d\n", player->loan.loanAmount);
+
         printf("Available Cash : LKR %d\n", player->money);
 
         return 1;

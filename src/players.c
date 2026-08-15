@@ -18,6 +18,13 @@ void createPlayer(Player *player, int id, char name[]){
 
     player->propertyCount = 0;
 
+    player->taxesDue = 0;
+
+    player->insuranceClaims = 0;
+
+    player->inJail = 0;
+
+    player->jailTurns = 0;
 
 
 
@@ -29,6 +36,17 @@ void createPlayer(Player *player, int id, char name[]){
 
     player->loan.collateralValue = 0;
 
-    player->loan.maturity = 0;
+    player->loan.maturity = 20;
+
+    player->loan.originalAmount = 0;
+
+    player->loan.remainingRounds = 0;
+
+    player->loan.accumulatedInterest = 0;
+
+
+
+    
+    player->loanLockedAssetCount = 0;
 
 }

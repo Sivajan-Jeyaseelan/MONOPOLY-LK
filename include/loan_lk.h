@@ -10,4 +10,6 @@ int hasLoanCollateral(Player *player, Board board[]);
 // Rule LK 2 
 int calculateMaximumLoan(Player *player, Board board[]);
 
+void obtainLKLoan(Player *player, Board board[]);
+
 #endif

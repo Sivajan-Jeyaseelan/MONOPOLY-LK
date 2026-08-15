@@ -36,13 +36,24 @@ void createProperty(Board *square, int id, char name[], int group, int price, in
     square->property.hotelCost = hotel;
     square->property.ownerID = -1;
     square->property.mortgageStatus = 0;
+
+    /* MONOPOLY-LK loan */
+    square->property.loanLocked = 0;
     square->property.insuranceStatus = 0;
+
     square->property.insurance.lostIncomeRounds = 0;
     square->property.insurance.type = NO_INSURANCE;
     square->property.insurance.premium = 0;
     square->property.insurance.remainingRounds = 0;
     square->property.insurance.lostIncomeRounds = 0;
     square->property.insurance.disasterActive = 0;
+
+    /* MONOPOLY-LK insurance */
+    square->property.insurance.active = 0;
+    square->property.insurance.propertyValue = 0;
+    square->property.insurance.coveragePercent = 0;
+    square->property.insurance.renewalReminderShown = 0;
+
     square->property.buildings = NO_BUILDING;
     square->property.houseCount = 0;
 
@@ -68,6 +79,9 @@ void createRailway(Board *square, int id, char name[], int purchasePrice, int mo
 
     square->railway.mortgageStatus = 0;
 
+    /* MONOPOLY-LK loan */
+    square->railway.loanLocked = 0;
+
 }
 
 void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue){
@@ -89,5 +103,8 @@ void createUtility(Board *square, int id, char name[], int purchasePrice, int mo
     square->utility.ownerID = -1;
 
     square->utility.mortgageStatus = 0;
+
+    /* MONOPOLY-LK loan */
+    square->utility.loanLocked = 0;
 
 }
