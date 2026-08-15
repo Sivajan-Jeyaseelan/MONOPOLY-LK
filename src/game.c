@@ -139,8 +139,78 @@ void playTurn(Player *player, Board board[]){
     printf("Checking building construction...\n");
     checkBuilding(player, board);
 
+    checkBankruptcy(player, board);
+
     printf("Completing financial transactions...\n");
 
     printf("Turn ended\n");
+
+}
+
+void startGame(Player players[], int playerCount, Board board[]){
+
+    int round = 1;
+    int turnOrder[4];
+
+    determineFirstPlayer(players, turnOrder);
+
+    while(round <= 500){
+
+        printf("\n============================\n");
+        printf("ROUND %d\n", round);
+        printf("============================\n");
+
+        for(int i = 0; i < playerCount; i++){
+
+            int playerIndex = turnOrder[i];
+
+            if(players[playerIndex].bankrupt == 1){
+                continue;
+            }
+
+            playTurn(&players[playerIndex], board);
+
+            if(checkGameOver(players, playerCount)){
+
+                Player *winner = findWinner(players, playerCount, board);
+
+                printf("\n============================\n");
+                printf("GAME OVER\n");
+                printf("============================\n");
+
+                printf("Only one solvent player remains.\n");
+
+                if(winner != NULL){
+
+                    printf("Winner: %s\n", winner->name);
+                    printf("Net Worth: LKR %d\n", calculateAssets(winner, board));
+
+                }
+
+                return;
+
+            }
+
+        }
+
+        round++;
+        
+    }
+
+
+    printf("\n============================\n");
+    printf("GAME OVER\n");
+    printf("============================\n");
+
+    printf("Maximum 500 rounds reached.\n");
+
+    Player *winner = findWinner(players, playerCount, board);
+
+    if(winner != NULL){
+
+        printf("Winner: %s\n", winner->name);
+        printf("Net Worth: LKR %d\n", calculateAssets(winner, board));
+
+    }
 
 }

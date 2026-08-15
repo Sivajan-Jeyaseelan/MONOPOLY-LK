@@ -43,28 +43,19 @@ void auctionProperty(Player players[], int playerCount, Board *property){
 
         int bid;
 
-        while(1){
+        if(players[i].money >= property->property.purchasePrice){
 
-            printf("%s enter bid: ", players[i].name);
-            scanf("%d",&bid);
+            bid = property->property.purchasePrice;
 
+        }else{
 
-            if(bid % 250 != 0){
+            bid = (players[i].money / 2 / 250) * 250;
 
-                printf("Invalid bid. Must increase by LKR 250\n");
-                continue;
+        }
 
-            }
+        if(bid > players[i].money){
 
-            if(bid > players[i].money){
-
-                printf("Insufficient money\n");
-                continue;
-
-            }
-
-
-            break;
+            bid = (players[i].money / 250) * 250;
 
         }
 
@@ -73,11 +64,13 @@ void auctionProperty(Player players[], int playerCount, Board *property){
             highestBid = bid;
             winner = i;
 
+            printf("%s bids LKR %d\n", players[i].name, bid);
+
         }
 
     }
 
-    if(winner != -1){
+    if(winner != -1 && highestBid > 0){
 
         players[winner].money -= highestBid;
 
@@ -86,7 +79,7 @@ void auctionProperty(Player players[], int playerCount, Board *property){
         players[winner].propertyCount++;
 
 
-        printf("%s won auction\n", players[winner].name);
+        printf("%s won the auction for LKR %d\n", players[winner].name, highestBid);
 
     }else{
 
@@ -110,28 +103,21 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 
     if(currentSquare->property.ownerID == -1){
 
-        int choice;
-
         printf("%s landed on %s\n", player->name, currentSquare->name);
-
         printf("Price: LKR %d\n", currentSquare->property.purchasePrice);
 
-        printf("1. Buy\n");
-        printf("2. Refuse\n");
+        if(player->money >= currentSquare->property.purchasePrice + 5000){
 
-        printf("Choice: ");
-        scanf("%d",&choice);
-
-        if(choice == 1){
+            printf("%s decided to buy the property.\n", player->name);
 
             purchaseProperty(player,currentSquare);
 
-        }
-        else{
+        }else{
 
-            printf("Property goes to auction\n");
+            printf("%s refused to buy the property.\n", player->name);
+            printf("Property goes to auction.\n");
 
-            auctionProperty(players,playerCount,currentSquare);
+            auctionProperty(players, playerCount, currentSquare);
 
         }
 

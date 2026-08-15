@@ -15,5 +15,7 @@ int countActivePlayers(Player players[], int totalPlayers);
 int checkGameOver(Player players[], int totalPlayers);
 Player* findWinner(Player players[], int totalPlayers, Board board[]);
 
+void startGame(Player players[], int playerCount, Board board[]);
+
 
 #endif

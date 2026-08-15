@@ -32,7 +32,7 @@ void recoverDebt(Player *player, int amount, Board board[]){
     // Cannot pay even after selling assets
     printf("%s cannot recover the debt\n", player->name);
 
-    player->bankrupt = 1;
+    declareBankruptcy(player, board);
 
     printf("%s declared bankrupt\n", player->name);
 
