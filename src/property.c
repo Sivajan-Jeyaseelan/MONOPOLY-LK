@@ -2,6 +2,7 @@
 
 
 #include "../include/property.h"
+#include "../include/dept.h"
 
 
 void purchaseProperty(Player *player, Board *property){
@@ -150,12 +151,25 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 
         int rent = currentSquare->property.baseRent;
 
-        player->money -= rent;
+        printf("Rent Due : LKR %d\n", rent);
+        printf("Owner : %s\n", players[owner].name);
 
-        players[owner].money += rent;
 
+        if(player->money >= rent){
 
-        printf("%s paid LKR %d rent to %s\n", player->name, rent, players[owner].name);
+            player->money -= rent;
+            players[owner].money += rent;
+
+            printf("%s paid LKR %d rent to %s\n", player->name, rent, players[owner].name);
+            printf("Remaining Balance : LKR %d\n", player->money);
+
+        }else{
+
+            printf("%s cannot immediately pay the rent.\n", player->name);
+
+            recoverDebt(player, rent, board);
+
+        }
 
     }
 
