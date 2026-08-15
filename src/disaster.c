@@ -3,7 +3,7 @@
 #include "../include/insurance.h"
 
 
-void applyDisaster(Board *property, Player *owner, int repairCost){
+/*void applyDisaster(Board *property, Player *owner, int repairCost){
 
     if(property->property.insuranceStatus == 1){
 
@@ -28,4 +28,4 @@ void applyDisaster(Board *property, Player *owner, int repairCost){
 
     }
 
-}
+}*/

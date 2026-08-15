@@ -2,7 +2,7 @@
 
 #include "../include/insurance.h"
 
-
+/*
 void processDisaster(Board *property, Player *owner, int repairCost){
 
     applyDisaster(property, owner, repairCost);
@@ -29,3 +29,4 @@ void updateInsuranceSystem(Board board[]){
     updateInsurance(board);
 
 }
+*/

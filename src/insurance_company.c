@@ -2,7 +2,7 @@
 
 #include "../include/insurance.h"
 
-
+/*
 void purchaseInsurance(Player *player, Board board[]){
 
     int propertyID;
@@ -172,4 +172,4 @@ void updateInsurance(Board board[]){
 
     }
 
-}
+}*/

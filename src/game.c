@@ -4,6 +4,7 @@
 #include "../include/dice.h"
 #include "../include/property.h"
 #include "../include/building.h"
+#include "../include/dept.h"
 
 
 
