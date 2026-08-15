@@ -67,6 +67,7 @@ void movePlayer(Player *player, int steps){
 #include "../include/dice.h"
 #include "../include/property.h"
 #include "../include/building.h"
+#include "../include/dept.h"
 
 
 
@@ -201,9 +202,79 @@ void playTurn(Player *player, Board board[]){
     printf("Checking building construction...\n");
     checkBuilding(player, board);
 
+    checkBankruptcy(player, board);
+
     printf("Completing financial transactions...\n");
 
     printf("Turn ended\n");
+
+}
+
+void startGame(Player players[], int playerCount, Board board[]){
+
+    int round = 1;
+    int turnOrder[4];
+
+    determineFirstPlayer(players, turnOrder);
+
+    while(round <= 500){
+
+        printf("\n============================\n");
+        printf("ROUND %d\n", round);
+        printf("============================\n");
+
+        for(int i = 0; i < playerCount; i++){
+
+            int playerIndex = turnOrder[i];
+
+            if(players[playerIndex].bankrupt == 1){
+                continue;
+            }
+
+            playTurn(&players[playerIndex], board);
+
+            if(checkGameOver(players, playerCount)){
+
+                Player *winner = findWinner(players, playerCount, board);
+
+                printf("\n============================\n");
+                printf("GAME OVER\n");
+                printf("============================\n");
+
+                printf("Only one solvent player remains.\n");
+
+                if(winner != NULL){
+
+                    printf("Winner: %s\n", winner->name);
+                    printf("Net Worth: LKR %d\n", calculateAssets(winner, board));
+
+                }
+
+                return;
+
+            }
+
+        }
+
+        round++;
+        
+    }
+
+
+    printf("\n============================\n");
+    printf("GAME OVER\n");
+    printf("============================\n");
+
+    printf("Maximum 500 rounds reached.\n");
+
+    Player *winner = findWinner(players, playerCount, board);
+
+    if(winner != NULL){
+
+        printf("Winner: %s\n", winner->name);
+        printf("Net Worth: LKR %d\n", calculateAssets(winner, board));
+
+    }
 
 }
 
@@ -211,7 +282,8 @@ void playTurn(Player *player, Board board[]){
 #include <stdio.h>
 
 
-#include "../include/board.h"
+#include "../include/property.h"
+#include "../include/dept.h"
 
 
 void purchaseProperty(Player *player, Board *property){
@@ -252,28 +324,19 @@ void auctionProperty(Player players[], int playerCount, Board *property){
 
         int bid;
 
-        while(1){
+        if(players[i].money >= property->property.purchasePrice){
 
-            printf("%s enter bid: ", players[i].name);
-            scanf("%d",&bid);
+            bid = property->property.purchasePrice;
 
+        }else{
 
-            if(bid % 250 != 0){
+            bid = (players[i].money / 2 / 250) * 250;
 
-                printf("Invalid bid. Must increase by LKR 250\n");
-                continue;
+        }
 
-            }
+        if(bid > players[i].money){
 
-            if(bid > players[i].money){
-
-                printf("Insufficient money\n");
-                continue;
-
-            }
-
-
-            break;
+            bid = (players[i].money / 250) * 250;
 
         }
 
@@ -282,11 +345,13 @@ void auctionProperty(Player players[], int playerCount, Board *property){
             highestBid = bid;
             winner = i;
 
+            printf("%s bids LKR %d\n", players[i].name, bid);
+
         }
 
     }
 
-    if(winner != -1){
+    if(winner != -1 && highestBid > 0){
 
         players[winner].money -= highestBid;
 
@@ -295,7 +360,7 @@ void auctionProperty(Player players[], int playerCount, Board *property){
         players[winner].propertyCount++;
 
 
-        printf("%s won auction\n", players[winner].name);
+        printf("%s won the auction for LKR %d\n", players[winner].name, highestBid);
 
     }else{
 
@@ -319,28 +384,21 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 
     if(currentSquare->property.ownerID == -1){
 
-        int choice;
-
         printf("%s landed on %s\n", player->name, currentSquare->name);
-
         printf("Price: LKR %d\n", currentSquare->property.purchasePrice);
 
-        printf("1. Buy\n");
-        printf("2. Refuse\n");
+        if(player->money >= currentSquare->property.purchasePrice + 5000){
 
-        printf("Choice: ");
-        scanf("%d",&choice);
-
-        if(choice == 1){
+            printf("%s decided to buy the property.\n", player->name);
 
             purchaseProperty(player,currentSquare);
 
-        }
-        else{
+        }else{
 
-            printf("Property goes to auction\n");
+            printf("%s refused to buy the property.\n", player->name);
+            printf("Property goes to auction.\n");
 
-            auctionProperty(players,playerCount,currentSquare);
+            auctionProperty(players, playerCount, currentSquare);
 
         }
 
@@ -360,12 +418,25 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
 
         int rent = currentSquare->property.baseRent;
 
-        player->money -= rent;
+        printf("Rent Due : LKR %d\n", rent);
+        printf("Owner : %s\n", players[owner].name);
 
-        players[owner].money += rent;
 
+        if(player->money >= rent){
 
-        printf("%s paid LKR %d rent to %s\n", player->name, rent, players[owner].name);
+            player->money -= rent;
+            players[owner].money += rent;
+
+            printf("%s paid LKR %d rent to %s\n", player->name, rent, players[owner].name);
+            printf("Remaining Balance : LKR %d\n", player->money);
+
+        }else{
+
+            printf("%s cannot immediately pay the rent.\n", player->name);
+
+            recoverDebt(player, rent, board);
+
+        }
 
     }
 
@@ -402,6 +473,25 @@ int checkMonopoly(Player *player, Board board[], int groupID){
     }
 
     return 0; 
+
+}
+
+
+int canBuild(Player *player, Board *property, Board board[]){
+
+    if(property->property.ownerID != player->id){
+        return 0;
+    }
+
+    if(checkMonopoly(player, board, property->property.groupID) == 0){
+        return 0;
+    }
+
+    if(property->property.mortgageStatus == 1){
+        return 0;
+    }
+
+    return 1;
 
 }
 

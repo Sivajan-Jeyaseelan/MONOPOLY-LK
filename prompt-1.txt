@@ -37,19 +37,69 @@ typedef enum{
 }InsuranceType; 
 
 
+// Loan transaction actions
+typedef enum{
+
+    LOAN_REPAY_PARTIAL,
+    LOAN_REPAY_FULL,
+    LOAN_EXTEND,
+    LOAN_INCREASE
+
+}LoanAction;
+
+
+// Disaster types
+typedef enum{
+
+    NO_DISASTER,
+    FIRE,
+    FLOOD,
+    RIOT,
+    BUILDING_COLLAPSE,
+    ELECTRICAL_FAILURE
+
+}DisasterType;
+
+
+// Economic event types
+typedef enum{
+
+    NO_ECONOMIC_EVENT,
+    TOURISM_BOOM,
+    FUEL_CRISIS,
+    HEAVY_MONSOON,
+    ECONOMIC_RECESSION,
+    STOCK_MARKET_BOOM,
+    GOVERNMENT_HOUSING_PROGRAMME,
+    FOREIGN_INVESTMENT,
+    POLITICAL_UNREST
+
+}EconomicEventType;
+
+
+// Auction status
+typedef enum{
+
+    AUCTION_CLOSED,
+    AUCTION_OPEN
+
+}AuctionStatus;
+
 
 // Insurance Structure
 typedef struct{
 
     InsuranceType type;
-
     int premium;
-
     int remainingRounds;
-
     int lostIncomeRounds;
-
     int disasterActive;
+
+    /* MONOPOLY-LK */
+    int active;
+    int propertyValue;
+    int coveragePercent;
+    int renewalReminderShown;
 
 }Insurance;
 
@@ -72,6 +122,15 @@ typedef struct{
     int insuranceStatus;
     Insurance insurance;
 
+    int loanLocked;
+    int damaged;
+    int propertyAge;
+    int depreciation;
+    int currentValue;
+    int currentRent;
+    int repairCost;
+    int renovationRequired;
+
     
 
 }Property;
@@ -87,6 +146,7 @@ typedef struct{
     int mortgageValue;
     int ownerID;
     int mortgageStatus;
+    int loanLocked;
 
 }Railway;
 
@@ -99,6 +159,7 @@ typedef struct{
     int mortgageValue;
     int ownerID;
     int mortgageStatus;
+    int loanLocked;
 
 }Utility;
 
@@ -129,6 +190,11 @@ typedef struct{
     int collateralValue;
     int maturity;
 
+    /* MONOPOLY-LK */
+    int originalAmount;
+    int remainingRounds;
+    int accumulatedInterest;
+
 }Loan;
 
 
@@ -151,11 +217,27 @@ typedef struct{
 
     Loan loan;
 
+    int loanLockedAssetCount;
+
 }Player;   
 
 
 
+typedef struct{
 
+    int inflationRate;
+    int previousInflationRate;
+
+    int tourismBoom;
+    int fuelCrisis;
+    int heavyMonsoon;
+    int economicRecession;
+    int stockMarketBoom;
+    int governmentHousingProgramme;
+    int foreignInvestment;
+    int politicalUnrest;
+
+}EconomicState;
 
 
 #endif
@@ -251,6 +333,8 @@ int countActivePlayers(Player players[], int totalPlayers);
 int checkGameOver(Player players[], int totalPlayers);
 Player* findWinner(Player players[], int totalPlayers, Board board[]);
 
+void startGame(Player players[], int playerCount, Board board[]);
+
 
 #endif
 
@@ -330,6 +414,7 @@ int canBuild(Player *player, Board *property, Board board[]);
 #include "types.h"
 
 void createSquare(Board *square, int id, char name[], SquareType type);
+void createTaxSquare(Board *square, int id, char name[], int taxAmount);
 void createProperty(Board *square, int id, char name[], int group, int price, int mortgage, int rent, int house, int hotel);
 void createRailway(Board *square, int id, char name[], int purchasePrice, int mortgageValue);
 void createUtility(Board *square, int id, char name[], int purchasePrice, int mortgageValue);

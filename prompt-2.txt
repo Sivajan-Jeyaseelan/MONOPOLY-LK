@@ -76,6 +76,7 @@ int calculateUtilityRent(Board board[], int ownerID, int diceValue){
 
 2)rules.c
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../include/rules.h"
 #include "../include/dept.h"
@@ -144,58 +145,67 @@ void handleJail(Player *player){
         return;
     }
 
-    int choice;
-
     printf("\n%s is in Jail\n", player->name);
 
-    printf("1. Pay bail (LKR 300)\n");
-    printf("2. Try rolling doubles\n");
-    printf("3. Stay in jail\n");
+    /*
+     * Temporary autonomous decision:
+     * Pay bail if the player can afford it.
+     */
 
-    printf("Choice: ");
-    scanf("%d",&choice);
+    if(player->money >= 300){
+
+        player->money -= 300;
+        player->inJail = 0;
+        player->jailTurns = 0;
+
+        printf("%s paid LKR 300 bail and left Jail\n",
+               player->name);
+
+        return;
+    }
 
 
-    if(choice == 1){
+    /*
+     * Player cannot afford bail.
+     * Try rolling doubles.
+     */
 
-        if(player->money >= 300){
+    int dice1 = (rand() % 6) + 1;
+    int dice2 = (rand() % 6) + 1;
 
-            player->money -= 300;
-            player->inJail = 0;
-            player->jailTurns = 0;
+    printf("%s rolled %d and %d in Jail\n", player->name, dice1, dice2);
 
-            printf("%s paid bail and left jail\n", player->name);
+    if(dice1 == dice2){
 
-        }else{
+        player->inJail = 0;
+        player->jailTurns = 0;
 
-            printf("Not enough money for bail\n");
+        printf("%s rolled doubles and left Jail\n", player->name);
 
-        }
-
-    }else if(choice == 2){
-
-        // connect dice logic here later
-
-        printf("Roll doubles checking not implemented yet\n");
-
-    }else if(choice == 3){
-
-        player->jailTurns++;
-
-        printf("%s stayed in jail (%d/3 turns)\n", player->name, player->jailTurns);
-
-        if(player->jailTurns >= 3){
-
-            player->inJail = 0;
-
-            player->jailTurns = 0;
-
-            printf("%s completed jail time and left\n", player->name);
-
-        }
+        return;
 
     }
 
+
+    /*
+     * Doubles not rolled.
+     * Remain in Jail.
+     */
+
+    player->jailTurns++;
+
+    printf("%s remained in Jail (%d/3 turns)\n", player->name, player->jailTurns);
+
+
+    if(player->jailTurns >= 3){
+
+        player->inJail = 0;
+        player->jailTurns = 0;
+
+        printf("%s completed three Jail turns and left\n", player->name);
+
+    }
+    
 }
 
 3)dept.c
@@ -233,7 +243,7 @@ void recoverDebt(Player *player, int amount, Board board[]){
     // Cannot pay even after selling assets
     printf("%s cannot recover the debt\n", player->name);
 
-    player->bankrupt = 1;
+    declareBankruptcy(player, board);
 
     printf("%s declared bankrupt\n", player->name);
 
@@ -452,8 +462,6 @@ void displayBoard(Board board[]){
 
 }
 
-
-
 5)board_factory.c
 #include <stdio.h>
 #include <string.h>
@@ -658,6 +666,7 @@ void initializeBoard(Board board[]){
     createProperty(&board[39],39,"Galle Face",8,5500,2750,600,3000,8000);
 
 }
+
 7)board.c
 #include "../include/board.h"
 
@@ -674,7 +683,6 @@ void showBoard(Board board[]){
     displayBoard(board);
 
 }
-
 
 
 8)bank.c(this is related to commercial bank initial boiler plate code like need to check in future it may be bugs lets keep it as and go next)
@@ -971,14 +979,12 @@ void checkLoanMaturity(Player players[], int playerCount, Board board[]){
 }
 
 
-
-
 9)insurance_company.c
 #include <stdio.h>
 
 #include "../include/insurance.h"
 
-
+/*
 void purchaseInsurance(Player *player, Board board[]){
 
     int propertyID;
@@ -1148,7 +1154,7 @@ void updateInsurance(Board board[]){
 
     }
 
-}
+}*/
 
 
 
@@ -1232,12 +1238,12 @@ int calculateCompensation(Board *property, int repairCost){
 
 
 11)disaster.c
-#include <stdio.h>
+ #include <stdio.h>
 
 #include "../include/insurance.h"
 
 
-void applyDisaster(Board *property, Player *owner, int repairCost){
+/*void applyDisaster(Board *property, Player *owner, int repairCost){
 
     if(property->property.insuranceStatus == 1){
 
@@ -1262,7 +1268,7 @@ void applyDisaster(Board *property, Player *owner, int repairCost){
 
     }
 
-}
+}*/
 
 
 12)insurance.c
@@ -1270,7 +1276,7 @@ void applyDisaster(Board *property, Player *owner, int repairCost){
 
 #include "../include/insurance.h"
 
-
+/*
 void processDisaster(Board *property, Player *owner, int repairCost){
 
     applyDisaster(property, owner, repairCost);
@@ -1297,6 +1303,7 @@ void updateInsuranceSystem(Board board[]){
     updateInsurance(board);
 
 }
+*/
 
 
 
