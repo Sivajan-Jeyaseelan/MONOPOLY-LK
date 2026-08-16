@@ -240,6 +240,169 @@ typedef struct{
 }EconomicState;
 
 
+
+
+// Rules 19-23 : Auction
+typedef struct{
+
+    AuctionStatus status;
+
+    int propertyID;
+    int startingBid;
+    int minimumIncrement;
+    int highestBid;
+    int highestBidderID;
+
+    int withdrawn[4];
+
+}Auction;
+
+
+
+// Rules 25-29 : Building Condition and Maintenance
+typedef struct{
+
+    int condition;              
+    int age;                   
+    int maintenanceSkipped;   
+    int damaged;               
+    int renovationRequired;     
+
+}Building;
+
+
+
+// Rules 30-34 : Dynamic Property Market
+typedef enum{
+
+    MARKET_NONE,
+    MARKET_BOOM,
+    MARKET_DECLINE
+
+}MarketEffectType;
+
+
+typedef struct{
+
+    int groupID;
+    MarketEffectType effect;
+
+    int remainingRounds;
+    int startRound;
+    int lastSelectedRound;
+
+}MarketGroup;
+
+
+typedef struct{
+
+    int currentRound;
+
+    int boomGroupID;
+    int declineGroupID;
+
+    int boomRemainingRounds;
+    int declineRemainingRounds;
+
+    int lastBoomGroupID;
+    int lastDeclineGroupID;
+
+    int boomStartRound;
+    int declineStartRound;
+
+}PropertyMarketState;
+
+
+
+// Rules 35-36 : Regional Development Cards
+typedef enum{
+
+    REGIONAL_NONE,
+    SOUTHERN_TOURISM_BOOM,
+    PORT_CITY_EXPANSION,
+    IT_INDUSTRY_GROWTH,
+    NORTHERN_DEVELOPMENT,
+    TEA_EXPORT_BOOM,
+    AIRPORT_EXPANSION,
+    UNIVERSITY_CITY_GROWTH,
+    BEACH_POLLUTION,
+    FLOOD_DAMAGE,
+    TRANSPORT_STRIKE,
+    ELECTRICITY_TARIFF_INCREASE,
+    WATER_SHORTAGE
+
+}RegionalDevelopmentType;
+
+
+typedef struct{
+
+    RegionalDevelopmentType type;
+
+    int active;
+    int remainingRounds;
+    int startRound;
+
+}RegionalDevelopmentState;
+
+
+
+// Rule 24 : Government Regulation
+typedef enum{
+
+    NO_REGULATION,
+    INCREASE_PROPERTY_TAX,
+    GOVERNMENT_HOUSING_PROGRAMME,
+    FOREIGN_INVESTMENT_REGULATION,
+    POLITICAL_UNREST_REGULATION,
+    REDUCE_LOAN_INTEREST,
+    HOUSING_SUBSIDY,
+    LUXURY_PROPERTY_TAX,
+    RAILWAY_MODERNIZATION,
+    ELECTRICITY_TARIFF_REVISION,
+    INSURANCE_REGULATION,
+    ANTI_SPECULATION_ACT
+
+}RegulationType;
+
+
+typedef struct{
+
+    RegulationType type;
+
+    int active;
+    int remainingRounds;
+    int startRound;
+
+}GovernmentRegulationState;
+
+
+
+// Rule 18 : National Economic Event State
+typedef struct{
+
+    EconomicEventType type;
+
+    int active;
+    int remainingRounds;
+    int startRound;
+
+}NationalEconomicEventState;
+
+
+
+// Rules 18-36 : Extended Economic State
+typedef struct{
+
+    NationalEconomicEventState nationalEvent;
+    GovernmentRegulationState regulation;
+
+    PropertyMarketState propertyMarket;
+
+    RegionalDevelopmentState regionalDevelopment;
+
+}MonopolyLKState;
+
+
 #endif
 
 2)rules.h

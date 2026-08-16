@@ -3,8 +3,8 @@
 
 #include "types.h"
 
-DisasterType generateDisaster(void);
-int shouldTriggerDisaster(int round);
-void applyDisaster(DisasterType disaster, Board board[], Player players[]);
+DisasterType lkGenerateDisaster(void);
+int lkShouldTriggerDisaster(int round);
+void lkApplyDisaster(DisasterType disaster, Board board[], Player players[]);
 
 #endif

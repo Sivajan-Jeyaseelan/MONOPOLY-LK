@@ -5,7 +5,7 @@
 #include "../include/disaster_repair_lk.h"
 
 
-int shouldTriggerDisaster(int round){
+int lkShouldTriggerDisaster(int round){
 
     if(round <= 0){
         return 0;
@@ -15,7 +15,7 @@ int shouldTriggerDisaster(int round){
 
 }
 
-DisasterType generateDisaster(void){
+DisasterType lkGenerateDisaster(void){
 
     int disaster = rand() % 5;
 
@@ -104,7 +104,7 @@ static int calculateDisasterDamage(Property *property, DisasterType disaster){
 }
 
 
-void applyDisaster(DisasterType disaster, Board board[], Player players[]){
+void lkApplyDisaster(DisasterType disaster, Board board[], Player players[]){
 
     if(board == NULL || players == NULL){
         return;

@@ -3,7 +3,7 @@
 #include "../include/disaster_repair_lk.h"
 
 
-int calculateRepairCost(Property *property){
+int lkCalculateRepairCost(Property *property){
 
     if(property == NULL){
         return 0;
@@ -22,7 +22,7 @@ int calculateRepairCost(Property *property){
 }
 
 
-void repairDamagedProperties(Player *player, Board board[]){
+void lkRepairDamagedProperties(Player *player, Board board[]){
 
     if(player == NULL || board == NULL){
         return;
@@ -46,7 +46,7 @@ void repairDamagedProperties(Player *player, Board board[]){
         }
 
 
-        int repairCost = calculateRepairCost(property);
+        int repairCost = lkCalculateRepairCost(property);
 
         if(repairCost <= 0){
             continue;

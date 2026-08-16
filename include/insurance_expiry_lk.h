@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-void updateInsuranceRounds(Player *player, Board board[]);
-void checkInsuranceExpiry(Player *player, Board board[]);
+void lkUpdateInsuranceRounds(Player *player, Board board[]);
+void lkCheckInsuranceExpiry(Player *player, Board board[]);
 
 #endif

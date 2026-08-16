@@ -9,6 +9,10 @@
 #include "../include/bankruptcy_lk.h"
 #include "../include/loan_interest_lk.h"
 #include "../include/loan_default_lk.h"
+#include "../include/insurance_lk.h"
+#include "../include/insurance_expiry_lk.h"
+#include "../include/disaster_lk.h"
+#include "../include/disaster_repair_lk.h"
 
 
 
@@ -143,6 +147,19 @@ void playTurn(Player *player, Board board[]){
 
         resolveBank(player, board);
 
+    }else if(board[player->position].type == INSURANCE){
+
+        printf("%s landed on %s.\n", player->name, board[player->position].name);
+
+        printf("Insurance is available at this location.\n");
+
+       
+        if(lkCanPurchaseInsurance(player, board)){
+
+            printf("%s can purchase insurance here.\n", player->name);
+
+        }
+
     }else{
 
         resolveProperty(player, allPlayers, totalPlayers, board);
@@ -205,6 +222,20 @@ void startGame(Player players[], int playerCount, Board board[]){
 
         }
 
+        printf("\n------------------------------------\n");
+        printf("End of Round %d - Insurance Processing\n", round);
+        printf("------------------------------------\n");
+
+        for(int i = 0; i < playerCount; i++){
+
+            if(players[i].bankrupt == 1){
+                continue;
+            }
+
+            lkUpdateInsuranceRounds(&players[i], board);
+            lkCheckInsuranceExpiry(&players[i], board);
+
+        }
 
 
         printf("\n------------------------------------\n");
@@ -228,6 +259,29 @@ void startGame(Player players[], int playerCount, Board board[]){
                     checkLoanBankruptcy(&players[i], board);
 
                 }
+
+            }
+
+        }
+
+
+        if(lkShouldTriggerDisaster(round)){
+
+            printf("\n------------------------------------\n");
+            printf("Disaster Processing\n");
+            printf("------------------------------------\n");
+
+            DisasterType disaster = lkGenerateDisaster();
+
+            lkApplyDisaster(disaster, board, players);
+
+            for(int i = 0; i < playerCount; i++){
+
+                if(players[i].bankrupt == 1){
+                    continue;
+                }
+
+                lkRepairDamagedProperties(&players[i], board);
 
             }
 

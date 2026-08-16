@@ -3,10 +3,10 @@
 
 #include "types.h"
 
-int calculateInsurancePremium(Property *property, InsuranceType type);
-int getInsuranceCoverage(InsuranceType type);
+int lkCalculateInsurancePremium(Property *property, InsuranceType type);
+int lkGetInsuranceCoverage(InsuranceType type);
 
-int canPurchaseInsurance(Player *player, Board board[]);
-int purchaseInsurance(Player *player, Board board[], int propertyIndex, InsuranceType type);
+int lkCanPurchaseInsurance(Player *player, Board board[]);
+int lkPurchaseInsurance(Player *player, Board board[], int propertyIndex, InsuranceType type);
 
 #endif

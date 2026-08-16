@@ -49,7 +49,7 @@ void processLoanDefault(Player *player, Board board[]){
 
             if(board[i].property.ownerID == player->id &&   board[i].property.loanLocked == 1){
 
-                printf("Collateral Foreclosed : %s\n", board[i].property.name);
+                printf("Collateral Foreclosed : %s\n", board[i].name);
 
                 board[i].property.ownerID = -1;
 
@@ -81,7 +81,7 @@ void processLoanDefault(Player *player, Board board[]){
 
             if(board[i].railway.ownerID == player->id && board[i].railway.loanLocked == 1){
 
-                printf("Collateral Foreclosed : %s\n", board[i].railway.name);
+                printf("Collateral Foreclosed : %s\n", board[i].name);
 
                 board[i].railway.ownerID = -1;
 
@@ -98,7 +98,7 @@ void processLoanDefault(Player *player, Board board[]){
 
             if(board[i].utility.ownerID == player->id && board[i].utility.loanLocked == 1){
 
-                printf("Collateral Foreclosed : %s\n", board[i].utility.name);
+                printf("Collateral Foreclosed : %s\n", board[i].name);
 
                 board[i].utility.ownerID = -1;
                 board[i].utility.loanLocked = 0;

@@ -68,6 +68,11 @@ void movePlayer(Player *player, int steps){
 #include "../include/property.h"
 #include "../include/building.h"
 #include "../include/dept.h"
+#include "../include/bank_lk.h"
+#include "../include/bankruptcy_lk.h"
+#include "../include/loan_interest_lk.h"
+#include "../include/loan_default_lk.h"
+
 
 
 
@@ -197,12 +202,19 @@ void playTurn(Player *player, Board board[]){
 
     printf("Resolving landing action...\n");
 
-    resolveProperty(player, allPlayers, totalPlayers, board);
+    if(board[player->position].type == BANK){
+
+        resolveBank(player, board);
+
+    }else{
+
+        resolveProperty(player, allPlayers, totalPlayers, board);
+
+    }
+    
 
     printf("Checking building construction...\n");
     checkBuilding(player, board);
-
-    checkBankruptcy(player, board);
 
     printf("Completing financial transactions...\n");
 
@@ -251,6 +263,34 @@ void startGame(Player players[], int playerCount, Board board[]){
                 }
 
                 return;
+
+            }
+
+        }
+
+
+
+        printf("\n------------------------------------\n");
+        printf("End of Round %d - Loan Processing\n", round);
+        printf("------------------------------------\n");
+
+        for(int i = 0; i < playerCount; i++){
+
+            if(players[i].bankrupt == 1){
+                continue;
+            }
+
+            if(players[i].loan.active == 1){
+
+                advanceLoanRound(&players[i]);
+
+                if(isLoanDefaulted(&players[i])){
+
+                    processLoanDefault(&players[i], board);
+
+                    checkLoanBankruptcy(&players[i], board);
+
+                }
 
             }
 

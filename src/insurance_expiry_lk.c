@@ -3,7 +3,7 @@
 #include "../include/insurance_expiry_lk.h"
 
 
-void updateInsuranceRounds(Player *player, Board board[]){
+void lkUpdateInsuranceRounds(Player *player, Board board[]){
 
     if(player == NULL || board == NULL){
         return;
@@ -35,7 +35,7 @@ void updateInsuranceRounds(Player *player, Board board[]){
 
 }
 
-void checkInsuranceExpiry(Player *player, Board board[]){
+void lkCheckInsuranceExpiry(Player *player, Board board[]){
 
     if(player == NULL || board == NULL){
         return;

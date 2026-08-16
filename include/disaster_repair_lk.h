@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-int calculateRepairCost(Property *property);
-void repairDamagedProperties(Player *player, Board board[]);
+int lkCalculateRepairCost(Property *property);
+void lkRepairDamagedProperties(Player *player, Board board[]);
 
 #endif

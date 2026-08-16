@@ -3,7 +3,7 @@
 #include "../include/insurance_lk.h"
 
 
-int calculateInsurancePremium(Property *property, InsuranceType type){
+int lkCalculateInsurancePremium(Property *property, InsuranceType type){
 
     if(property == NULL){
         return 0;
@@ -38,7 +38,7 @@ int calculateInsurancePremium(Property *property, InsuranceType type){
 }
 
 
-int getInsuranceCoverage(InsuranceType type){
+int lkGetInsuranceCoverage(InsuranceType type){
 
     if(type == BASIC_INSURANCE){
         return 80;
@@ -56,7 +56,7 @@ int getInsuranceCoverage(InsuranceType type){
 
 }
 
-int canPurchaseInsurance(Player *player, Board board[]){
+int lkCanPurchaseInsurance(Player *player, Board board[]){
 
     if(player == NULL || board == NULL){
         return 0;
@@ -74,13 +74,13 @@ int canPurchaseInsurance(Player *player, Board board[]){
 
 }
 
-int purchaseInsurance(Player *player, Board board[], int propertyIndex, InsuranceType type){
+int lkPurchaseInsurance(Player *player, Board board[], int propertyIndex, InsuranceType type){
 
     if(player == NULL || board == NULL){
         return 0;
     }
 
-    if(!canPurchaseInsurance(player, board)){
+    if(!lkCanPurchaseInsurance(player, board)){
 
         printf("%s cannot purchase insurance here.\n", player->name);
         return 0;
@@ -125,7 +125,7 @@ int purchaseInsurance(Player *player, Board board[], int propertyIndex, Insuranc
 
     }
 
-    int premium = calculateInsurancePremium(property, type);
+    int premium = lkCalculateInsurancePremium(property, type);
 
     if(premium <= 0){
 
@@ -151,7 +151,7 @@ int purchaseInsurance(Player *player, Board board[], int propertyIndex, Insuranc
 
     property->insurance.active = 1;
     property->insurance.propertyValue = property->currentValue;
-    property->insurance.coveragePercent = getInsuranceCoverage(type);
+    property->insurance.coveragePercent = lkGetInsuranceCoverage(type);
 
     property->insurance.renewalReminderShown = 0;
 
