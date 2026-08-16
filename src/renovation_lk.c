@@ -3,7 +3,7 @@
 #include "../include/renovation_lk.h"
 
 
-int calculateRenovationCost(Property *property){
+/*int calculateRenovationCost(Property *property){
 
     if(property == NULL){
         return 0;
@@ -99,4 +99,4 @@ void renovateProperty(Player *player, Property *property){
 
     printf("=====================================\n");
 
-}
+}*/

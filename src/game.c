@@ -17,6 +17,10 @@
 #include "../include/depreciation_lk.h"
 #include "../include/depreciation_value_lk.h"
 #include "../include/economic_event_lk.h"
+#include "../include/building_condition_lk.h"
+#include "../include/building_maintenance_lk.h"
+#include "../include/building_renovation_lk.h"
+#include "../include/structural_damage_lk.h"
 
 
 
@@ -123,6 +127,32 @@ void determineFirstPlayer(Player players[], int turnOrder[]){
 void playTurn(Player *player, Board board[]){
 
     printf("\n%s's turn\n", player->name);
+
+    printf("Checking building maintenance...\n");
+
+    performBuildingMaintenance(player, board, 40);
+
+    printf("Checking building renovation...\n");
+
+    for(int i = 0; i < 40; i++){
+
+        if(board[i].type != PROPERTY){
+            continue;
+        }
+
+        if(board[i].property.ownerID != player->id){
+            continue;
+        }
+
+        if(board[i].property.damaged == 1){
+
+            printf("%s has structural damage.\n", board[i].property.name);
+
+            renovateBuilding(player, &board[i].property, NULL);
+
+        }
+
+    }
 
     printf("Checking penalties...\n");
 
