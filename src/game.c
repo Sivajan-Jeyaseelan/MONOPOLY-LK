@@ -14,6 +14,8 @@
 #include "../include/disaster_lk.h"
 #include "../include/disaster_repair_lk.h"
 #include "../include/inflation_lk.h"
+#include "../include/depreciation_lk.h"
+#include "../include/depreciation_value_lk.h"
 
 
 
@@ -300,6 +302,17 @@ void startGame(Player players[], int playerCount, Board board[]){
             }
 
         }
+
+
+        
+        printf("\n------------------------------------\n");
+        printf("End of Round %d - Property Depreciation Processing\n", round);
+        printf("------------------------------------\n");
+
+        increasePropertyAge(board);
+        applyPropertyDepreciation(board);
+
+
 
         if(round % 10 == 0){
 
