@@ -13,6 +13,7 @@
 #include "../include/insurance_expiry_lk.h"
 #include "../include/disaster_lk.h"
 #include "../include/disaster_repair_lk.h"
+#include "../include/inflation_lk.h"
 
 
 
@@ -181,6 +182,19 @@ void startGame(Player players[], int playerCount, Board board[]){
     int round = 1;
     int turnOrder[4];
 
+    EconomicState economy = {
+        .inflationRate = 0,
+        .previousInflationRate = 0,
+        .tourismBoom = 0,
+        .fuelCrisis = 0,
+        .heavyMonsoon = 0,
+        .economicRecession = 0,
+        .stockMarketBoom = 0,
+        .governmentHousingProgramme = 0,
+        .foreignInvestment = 0,
+        .politicalUnrest = 0
+    };
+
     determineFirstPlayer(players, turnOrder);
 
     while(round <= 500){
@@ -284,6 +298,12 @@ void startGame(Player players[], int playerCount, Board board[]){
                 lkRepairDamagedProperties(&players[i], board);
 
             }
+
+        }
+
+        if(round % 10 == 0){
+
+            applyInflation(&economy, board);
 
         }
 
