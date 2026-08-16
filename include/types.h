@@ -196,6 +196,17 @@ typedef struct{
 
 
 
+// Autonomous Player Strategies
+typedef enum{
+
+    AGGRESSIVE_INVESTOR,
+    CONSERVATIVE_BANKER,
+    RISK_TAKER,
+    OPPORTUNISTIC_TRADER
+
+}PlayerStrategy;
+
+
 // Player Structure
 typedef struct{
 
@@ -215,6 +226,8 @@ typedef struct{
     Loan loan;
 
     int loanLockedAssetCount;
+
+    PlayerStrategy strategy;
 
 }Player;   
 

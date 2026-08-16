@@ -3,6 +3,7 @@
 
 #include "../include/property.h"
 #include "../include/dept.h"
+#include "../include/auction_lk.h"
 
 
 void purchaseProperty(Player *player, Board *property){
@@ -26,7 +27,7 @@ void purchaseProperty(Player *player, Board *property){
 
 }
 
-
+/*
 void auctionProperty(Player players[], int playerCount, Board *property){
 
     int highestBid = 0;
@@ -88,7 +89,7 @@ void auctionProperty(Player players[], int playerCount, Board *property){
     }
 
 }
-
+*/
 
 void resolveProperty(Player *player, Player players[], int playerCount, Board board[]){
 
@@ -117,7 +118,19 @@ void resolveProperty(Player *player, Player players[], int playerCount, Board bo
             printf("%s refused to buy the property.\n", player->name);
             printf("Property goes to auction.\n");
 
-            auctionProperty(players, playerCount, currentSquare);
+            Auction auction;
+
+            startAuction(
+                &auction,
+                currentSquare
+            );
+
+            conductAuction(
+                &auction,
+                players,
+                playerCount,
+                currentSquare
+            );
 
         }
 

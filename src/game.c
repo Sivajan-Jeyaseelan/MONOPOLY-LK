@@ -16,6 +16,7 @@
 #include "../include/inflation_lk.h"
 #include "../include/depreciation_lk.h"
 #include "../include/depreciation_value_lk.h"
+#include "../include/economic_event_lk.h"
 
 
 
@@ -197,6 +198,8 @@ void startGame(Player players[], int playerCount, Board board[]){
         .politicalUnrest = 0
     };
 
+    MonopolyLKState lkState = {0};
+
     determineFirstPlayer(players, turnOrder);
 
     while(round <= 500){
@@ -319,6 +322,15 @@ void startGame(Player players[], int playerCount, Board board[]){
             applyInflation(&economy, board);
 
         }
+
+        /* Rule-LK 18: Economic Event every 15 rounds */
+        triggerEconomicEvent(
+            &lkState,
+            board,
+            players,
+            playerCount,
+            round
+        );
 
         round++;
         

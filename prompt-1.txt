@@ -199,6 +199,17 @@ typedef struct{
 
 
 
+// Autonomous Player Strategies
+typedef enum{
+
+    AGGRESSIVE_INVESTOR,
+    CONSERVATIVE_BANKER,
+    RISK_TAKER,
+    OPPORTUNISTIC_TRADER
+
+}PlayerStrategy;
+
+
 // Player Structure
 typedef struct{
 
@@ -351,7 +362,7 @@ typedef enum{
 
     NO_REGULATION,
     INCREASE_PROPERTY_TAX,
-    GOVERNMENT_HOUSING_PROGRAMME,
+    GOVERNMENT_HOUSING_REGULATION,
     FOREIGN_INVESTMENT_REGULATION,
     POLITICAL_UNREST_REGULATION,
     REDUCE_LOAN_INTEREST,
